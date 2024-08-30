@@ -27,8 +27,11 @@
 // *********************************************************************************************************************
 
 #include <iostream>
+#include <filesystem>
+#include "imageExtractor.hpp"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    
+    datasetExtractor("./Resources/Dataset/csv");
     return 0;
 }
