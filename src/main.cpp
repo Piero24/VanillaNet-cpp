@@ -15,13 +15,13 @@
 // *** make -C build
 // *** 
 // *** # Clear the terminal and run the executable from the main directory
-// *** clear && ./cpp-mnist
+// *** clear && ./VanillaNet-cpp
 // *** 
 // ***                                             ALL COMANDS IN TWO LINES
 // ***
 // *** MACOS
 // *** rm -r build && mkdir build && cmake -S . -B build
-// *** make -C build && clear && ./cpp-mnist
+// *** make -C build && clear && ./VanillaNet-cpp
 // ***
 // ********************************************************************************************************************* 
 // *********************************************************************************************************************

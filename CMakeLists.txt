@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 
 # Project name and version
-project(cpp-mnist VERSION 1.0)
+project(VanillaNet-cpp VERSION 1.0)
 
 # Set the C++ standard
 set(CMAKE_CXX_STANDARD 17)
@@ -31,14 +31,14 @@ include_directories(${CMAKE_SOURCE_DIR}/include/utils)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
 
 # Add executable
-add_executable(cpp-mnist 
+add_executable(VanillaNet-cpp 
     src/main.cpp
     src/extractor/imageExtractor.cpp
     src/utils/toolkit.cpp
 )
 
 # Link libraries
-target_link_libraries(cpp-mnist ${OpenCV_LIBS} ${Boost_LIBRARIES})
+target_link_libraries(VanillaNet-cpp ${OpenCV_LIBS} ${Boost_LIBRARIES})
 
 # Package settings (optional)
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})

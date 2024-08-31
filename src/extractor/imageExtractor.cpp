@@ -20,7 +20,9 @@ int datasetExtractor(const std::string& path)
             std::string rawName = fileName.substr(0, lastIndex);
 
             // Get the parent path
-            std::string prevPath = path; // Use the original path directly
+            lastIndex = path.find_last_of("/");
+            std::string prevPath = path.substr(0, lastIndex);
+
             std::string outputPath = makeFolder(prevPath, rawName);
 
             int totalImagesConverted = importCSVDataset(pathName, outputPath);
