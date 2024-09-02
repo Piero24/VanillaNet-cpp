@@ -26,6 +26,7 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 # Add subdirectories for extractor and utils to include path
 include_directories(${CMAKE_SOURCE_DIR}/include/extractor)
 include_directories(${CMAKE_SOURCE_DIR}/include/utils)
+include_directories(${CMAKE_SOURCE_DIR}/include/network)
 
 # Specify the output directory for the executable
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
@@ -35,6 +36,10 @@ add_executable(VanillaNet-cpp
     src/main.cpp
     src/extractor/imageExtractor.cpp
     src/utils/toolkit.cpp
+    src/network/neuron.cpp
+    src/network/activation.cpp
+    src/network/layer.cpp
+    src/network/network.cpp
 )
 
 # Link libraries
