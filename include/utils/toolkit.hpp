@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <filesystem>
+#include <vector>
 
 
 /**
@@ -19,6 +20,26 @@
  * @return The full path of the created or existing directory.
  */
 std::string makeFolder(const std::string& basePath, const std::string& folderName);
+
+
+/**
+ * @brief 
+ * 
+ * @param imagePath 
+ * 
+ * @return
+ */
+int labelExtractor(const std::string& imagePath);
+
+
+/**
+ * @brief 
+ * 
+ * @param label 
+ * 
+ * @return
+ */
+std::vector<double> trueLabel(int label);
 
 
 #endif // TOOLKIT_HPP

@@ -40,6 +40,7 @@ add_executable(VanillaNet-cpp
     src/network/activation.cpp
     src/network/layer.cpp
     src/network/network.cpp
+    src/lossFunctions.cpp
 )
 
 # Link libraries
