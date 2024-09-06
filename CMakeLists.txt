@@ -43,6 +43,8 @@ add_executable(VanillaNet-cpp
     src/network/network.cpp
     src/lossFunctions.cpp
     src/extractor/weightsBiasExtractor.cpp
+    src/train.cpp
+    src/test.cpp
     )
 
 # Link libraries

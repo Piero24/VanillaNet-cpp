@@ -35,6 +35,8 @@
 #include "activation.hpp"
 #include "lossFunctions.hpp"
 #include "weightsBiasExtractor.hpp"
+#include "train.hpp"
+#include "test.hpp"
 
 
 int main(int argc, char **argv)
@@ -63,62 +65,16 @@ int main(int argc, char **argv)
     {
         // importedWeightsAndBiases = parseJSON("./Resources/output/weights/test.json");
         importedWeightsAndBiases = parseJSON("./Resources/output/weights/mnist_fc128_relu_fc10_log_softmax_weights_biases.json");
+        // importedWeightsAndBiases = parseJSON("./Resources/output/weights/mnist_fc128_relu_fc10_sigmoid_weights_biases.json");
         // jsonValuePrinter(importedWeightsAndBiases);
         net.importWeightsBiases(importedWeightsAndBiases);
     }
 
-    
-
-    // --------------------------------------------------------------------------------------------
-
-
-
-
-
-
-    if (inputParams.Train)
-    {
-        // TODO: Training process        
-    }
-
-
-
-
-
-
+    // TRAIN
+    train(inputParams);
 
     // TEST
-    if (inputParams.Test)
-    {
-        for (const auto& imagePath : inputParams.TestDatasetImages)
-        {
-            VectorLabel vecLabel;
-            imageToVectorAndLabel(vecLabel, imagePath);
-
-            std::vector<double> outputOput = net.forwardPropagation(vecLabel.imagePixelVector);
-
-            double totalSum = 0.0;
-            int maxIndex = 0;
-            double maxVal = 0.0;
-
-            for (int i = 0; i < outputOput.size(); i++)
-            {
-                printf("Output %d: %f\n", i, outputOput[i]);
-                totalSum += outputOput[i];
-                if (outputOput[i] > maxVal)
-                {
-                    maxVal = outputOput[i];
-                    maxIndex = i;
-                }
-            }
-
-            printf("Output size: %ld - Total sum: %f\n", outputOput.size(), totalSum);
-            double loss = mse_loss(vecLabel.labelVector, outputOput);
-
-            printf("True value: %d, Predicted Value: %d with probability: %f, Loss: %f\n", vecLabel.label, maxIndex, maxVal, loss);
-
-        }
-    }
-
+    test(net, inputParams);
+    
     return 0;
 }
