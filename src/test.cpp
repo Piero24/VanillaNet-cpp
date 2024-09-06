@@ -1,7 +1,7 @@
 #include "test.hpp"
 
 
-int test(Network &net, Arguments &inputParams)
+int networkTest(Network &net, Arguments &inputParams)
 {
     std::vector<TestResult> testResults;
 

@@ -50,8 +50,6 @@ int main(int argc, char **argv)
 
     infoPrinter(inputParams);
 
-    std::vector<BiasesWeights> importedWeightsAndBiases;
-
     Network net;
     net.addLayer(Layer(784, 128));
     net.addLayer(ActivationLayer(ActivationType::RELU));
@@ -61,20 +59,15 @@ int main(int argc, char **argv)
     //! Remove after testing
     inputParams.hasWeightsBiases = true;
 
-    if (inputParams.hasWeightsBiases)
-    {
-        // importedWeightsAndBiases = parseJSON("./Resources/output/weights/test.json");
-        importedWeightsAndBiases = parseJSON("./Resources/output/weights/mnist_fc128_relu_fc10_log_softmax_weights_biases.json");
-        // importedWeightsAndBiases = parseJSON("./Resources/output/weights/mnist_fc128_relu_fc10_sigmoid_weights_biases.json");
-        // jsonValuePrinter(importedWeightsAndBiases);
-        net.importWeightsBiases(importedWeightsAndBiases);
-    }
+    std::vector<BiasesWeights> importedWeightsAndBiases;
+    weightsBiasExtractor(inputParams, importedWeightsAndBiases);
+    net.importWeightsBiases(importedWeightsAndBiases);
 
     // TRAIN
-    train(inputParams);
+    networkTrain(inputParams);
 
     // TEST
-    test(net, inputParams);
+    networkTest(net, inputParams);
     
     return 0;
 }

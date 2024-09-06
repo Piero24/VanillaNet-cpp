@@ -5,8 +5,9 @@
 #include <fstream>
 #include <vector>
 
-
 #include <nlohmann/json.hpp>
+
+#include "toolkit.hpp"
 
 
 /**
@@ -52,6 +53,20 @@ std::vector<BiasesWeights> parseJSON(const std::string& jsonString);
  * @param importedWeightsAndBiases The vector containing biases and weights for each layer.
  */
 void jsonValuePrinter(const std::vector<BiasesWeights>& importedWeightsAndBiases);
+
+
+/**
+ * @brief Extracts the biases and weights from a JSON file and stores them in a vector.
+ * 
+ * This function reads a JSON file containing the biases and weights for a neural network's 
+ * layers and stores them in a vector of `BiasesWeights` structures. The file is expected to 
+ * contain bias and weight data for fully connected (fc) layers in a neural network, with keys 
+ * in the format "fcN.bias" and "fcN.weight" where N is the layer index.
+ * 
+ * @param inputParams The input parameters for the program.
+ * @param importedWeightsAndBiases The vector to store the biases and weights for each layer.
+ */
+void weightsBiasExtractor(Arguments &inputParams, std::vector<BiasesWeights> &importedWeightsAndBiases);
 
 
 #endif // WEIGHTSBIASEXTRACTOR_HPP

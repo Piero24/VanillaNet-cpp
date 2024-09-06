@@ -67,3 +67,15 @@ void jsonValuePrinter(const std::vector<BiasesWeights>& importedWeightsAndBiases
         printf("\n");
     }
 }
+
+
+void weightsBiasExtractor(Arguments &inputParams, std::vector<BiasesWeights> &importedWeightsAndBiases)
+{
+    if (inputParams.hasWeightsBiases)
+    {
+        // importedWeightsAndBiases = parseJSON("./Resources/output/weights/test.json");
+        importedWeightsAndBiases = parseJSON("./Resources/output/weights/mnist_fc128_relu_fc10_log_softmax_weights_biases.json");
+        // importedWeightsAndBiases = parseJSON("./Resources/output/weights/mnist_fc128_relu_fc10_sigmoid_weights_biases.json");
+        // jsonValuePrinter(importedWeightsAndBiases);
+    }
+}

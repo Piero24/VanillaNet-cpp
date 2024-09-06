@@ -25,6 +25,8 @@ void Network::importWeightsBiases(std::vector<BiasesWeights> weightsBiases)
 {
     int weightBiasIndex = 0;
 
+    if (weightsBiases.size() == 0) return;
+
     if (weightsBiases.size() != standardLayerCount)
     {
         printf("Error: Number of layers in the network does not match the number of weights and biases provided.\n");

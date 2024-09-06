@@ -15,7 +15,7 @@ struct TestResult
 };
 
 
-int test(Network &net, Arguments &inputParams);
+int networkTest(Network &net, Arguments &inputParams);
 
 
 #endif // TEST_HPP
