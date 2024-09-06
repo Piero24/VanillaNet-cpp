@@ -64,7 +64,10 @@ int main(int argc, char **argv)
     net.importWeightsBiases(importedWeightsAndBiases);
 
     // TRAIN
-    networkTrain(inputParams);
+    int epochs = 1;
+    int batchSize = 32;
+    double learningRate = 0.01;
+    networkTrain(inputParams, epochs, batchSize, learningRate);
 
     // TEST
     networkTest(net, inputParams);
