@@ -30,55 +30,95 @@
 #include <filesystem>
 #include <opencv2/opencv.hpp>
 
-#include "imageExtractor.hpp"
-#include "neuron.hpp"
-#include "activation.hpp"
-#include "layer.hpp"
+#include "network.hpp"
 #include "toolkit.hpp"
+#include "activation.hpp"
 #include "lossFunctions.hpp"
+#include "weightsBiasExtractor.hpp"
 
 
-int main() {
-    
-    // datasetExtractor("./Resources/Dataset/csv");
-    std::string imagePath = "./Resources/Dataset/mnist_train/image_0_1.png";
-
-    cv::Mat inputImage = cv::imread(imagePath, cv::IMREAD_GRAYSCALE);
-
-    cv::Mat fImage; 
-    inputImage.convertTo(fImage, CV_64F);
-    std::vector<double> imagePixelVector(fImage.begin<double>(), fImage.end<double>());
-    // printf("Image size: %ld\n", imagePixelVector.size());
-
-    Layer hiddenLayer(10, imagePixelVector);
-    std::vector<double> outputHidden = Activation(ActivationType::RELU, hiddenLayer.outputs);
-
-    Layer outputLayer(10, outputHidden);
-    std::vector<double> outputOput = Activation(ActivationType::SOFTMAX, outputLayer.outputs);
-
-    int label = labelExtractor(imagePath);
-    std::vector<double> labelVector = trueLabel(label);
-
-
-    double totalSum = 0.0;
-    int maxIndex = 0;
-    double maxVal = 0.0;
-
-    for (int i = 0; i < outputOput.size(); i++)
+int main(int argc, char **argv)
+{
+    Arguments inputParams;
+    int res = parser(inputParams, argc, argv);
+    if (res != 0)
     {
-        printf("Output %d: %f\n", i, outputOput[i]);
-        totalSum += outputOput[i];
-        if (outputOput[i] > maxVal)
-        {
-            maxVal = outputOput[i];
-            maxIndex = i;
-        }
+        return res;
     }
 
-    printf("Output size: %ld - Total sum: %f\n", outputOput.size(), totalSum);
-    double loss = mse_loss(labelVector, outputOput);
+    infoPrinter(inputParams);
 
-    printf("True value: %d, Predicted Value: %d with probability: %f, Loss: %f\n", label, maxIndex, maxVal, loss);
+    std::vector<BiasesWeights> importedWeightsAndBiases;
+
+    Network net;
+    net.addLayer(Layer(784, 128));
+    net.addLayer(ActivationLayer(ActivationType::RELU));
+    net.addLayer(Layer(128, 10));
+    net.addLayer(ActivationLayer(ActivationType::SOFTMAX));
+
+    //! Remove after testing
+    inputParams.hasWeightsBiases = true;
+
+    if (inputParams.hasWeightsBiases)
+    {
+        // importedWeightsAndBiases = parseJSON("./Resources/output/weights/test.json");
+        importedWeightsAndBiases = parseJSON("./Resources/output/weights/mnist_fc128_relu_fc10_log_softmax_weights_biases.json");
+        // jsonValuePrinter(importedWeightsAndBiases);
+        net.importWeightsBiases(importedWeightsAndBiases);
+    }
+
+    
+
+    // --------------------------------------------------------------------------------------------
+
+
+
+
+
+
+    if (inputParams.Train)
+    {
+        // TODO: Training process        
+    }
+
+
+
+
+
+
+
+    // TEST
+    if (inputParams.Test)
+    {
+        for (const auto& imagePath : inputParams.TestDatasetImages)
+        {
+            VectorLabel vecLabel;
+            imageToVectorAndLabel(vecLabel, imagePath);
+
+            std::vector<double> outputOput = net.forwardPropagation(vecLabel.imagePixelVector);
+
+            double totalSum = 0.0;
+            int maxIndex = 0;
+            double maxVal = 0.0;
+
+            for (int i = 0; i < outputOput.size(); i++)
+            {
+                printf("Output %d: %f\n", i, outputOput[i]);
+                totalSum += outputOput[i];
+                if (outputOput[i] > maxVal)
+                {
+                    maxVal = outputOput[i];
+                    maxIndex = i;
+                }
+            }
+
+            printf("Output size: %ld - Total sum: %f\n", outputOput.size(), totalSum);
+            double loss = mse_loss(vecLabel.labelVector, outputOput);
+
+            printf("True value: %d, Predicted Value: %d with probability: %f, Loss: %f\n", vecLabel.label, maxIndex, maxVal, loss);
+
+        }
+    }
 
     return 0;
 }

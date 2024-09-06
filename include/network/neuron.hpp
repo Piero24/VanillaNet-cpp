@@ -6,92 +6,93 @@
 #include <vector>
 #include <random>
 
-#include "activation.hpp"
 
-
+/**
+ * @brief Class representing a single neuron in a neural network.
+ * 
+ * This class encapsulates the behavior of a neuron, including its inputs, weights,
+ * bias, and output. The neuron initializes its weights and bias randomly and can
+ * calculate its output based on the input values and the weights. It also allows
+ * for updating weights and bias.
+ */
 class Neuron {
-
 
     public:
 
-        //
-        double bias;
-        //
-        double output;
-        //
-        int numberOfInputs;
-        //
-        std::vector<double> inputs;
-        //
-        std::vector<double> weights;
+        double bias;                   ///< The bias value of the neuron.
+        int inputSize;                 ///< The number of inputs to this neuron.
+        std::vector<double> weights;   ///< The weights corresponding to each input.
 
 
         /**
-         * @brief 
+         * @brief Constructs a Neuron object with the specified input size.
          * 
-         * @param inputs
-         * @param activationFunction
+         * This constructor initializes the neuron with a set of randomized
+         * weights and bias. The input size determines the number of weights.
          * 
-         * @return
+         * @param inputSize The number of inputs to the neuron.
          */
-        Neuron(std::vector<double> inputs);
+        Neuron(int inputSize);
 
 
         /**
-         * @brief 
+         * @brief Sets the weights of the neuron.
+         *  
+         * This method updates the weights vector of the neuron.
          * 
-         * @param weight
-         * @param position
-         * 
-         * @return
+         * @param weight the new weights vector.
          */
-        void setWeights(double weight, int position);
+        void setWeights(std::vector<double> weight);
 
 
         /**
-         * @brief 
+         * @brief Sets the bias of the neuron.
          * 
-         * @param weight
+         * This method updates the bias value of the neuron.
          * 
-         * @return
+         * @param bias The new bias value.
          */
-        void setBias(double weight);
+        void setBias(double bias);
 
-    
+
+        /**
+         * @brief Computes the output of the neuron based on inputs, weights, and bias.
+         * 
+         * This method calculates the neuron's output using the provided inputs.
+         * It sums the product of inputs and weights and adds the bias.
+         * 
+         * @param inputs A vector of input values.
+         * @return The calculated output of the neuron.
+         */
+        double getOutput(std::vector<double> inputs);
+
+
+
     private:
 
-        static std::default_random_engine re;
-
-        
-        /**
-         * @brief 
-         * 
-         * @param numberOfInputs
-         * 
-         * @return
-         */
-        std::vector<double> initializeWeights(int numberOfInputs);
+        static std::default_random_engine re;  ///< Random engine for generating weights and bias.
 
 
         /**
-         * @brief 
+         * @brief Initializes the bias of the neuron randomly.
          * 
-         * @return
+         * This method generates a random bias value for the neuron.
+         * 
+         * @return The initialized bias value.
          */
         double initializeBias();
 
 
         /**
-         * @brief 
+         * @brief Initializes the weights of the neuron randomly.
          * 
-         * @param inputs
-         * @param weights
-         * @param bias
+         * This method generates random weights for the inputs of the neuron.
          * 
-         * @return
+         * @param inputSize The number of weights to initialize.
+         * @return A vector containing the initialized weights.
          */
-        double getOutput(std::vector<double> inputs, std::vector<double> weights, int bias);
-    
+        std::vector<double> initializeWeights(int inputSize);
+
 };
 
 

@@ -27,6 +27,7 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 include_directories(${CMAKE_SOURCE_DIR}/include/extractor)
 include_directories(${CMAKE_SOURCE_DIR}/include/utils)
 include_directories(${CMAKE_SOURCE_DIR}/include/network)
+include_directories(${CMAKE_SOURCE_DIR}/include/nlohmann)
 
 # Specify the output directory for the executable
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
@@ -41,7 +42,8 @@ add_executable(VanillaNet-cpp
     src/network/layer.cpp
     src/network/network.cpp
     src/lossFunctions.cpp
-)
+    src/extractor/weightsBiasExtractor.cpp
+    )
 
 # Link libraries
 target_link_libraries(VanillaNet-cpp ${OpenCV_LIBS} ${Boost_LIBRARIES})

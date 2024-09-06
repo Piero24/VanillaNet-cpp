@@ -4,27 +4,37 @@
 std::default_random_engine Neuron::re(static_cast<unsigned long>(std::time(nullptr)));
 
 
-Neuron::Neuron(std::vector<double> inputs)
+Neuron::Neuron(int inputSize)
 {
-    this->inputs = inputs;
-    this->numberOfInputs = inputs.size();
     this->bias = Neuron::initializeBias();
-    this->weights = Neuron::initializeWeights(numberOfInputs);
-    this->output = Neuron::getOutput(inputs, this->weights, this->bias);
+    this->inputSize = inputSize;
+    this->weights = Neuron::initializeWeights(inputSize);
 }
 
 
-std::vector<double> Neuron::initializeWeights(int numberOfInputs)
+void Neuron::setWeights(std::vector<double> weight)
 {
-    std::vector<double> weights(numberOfInputs);
-    std::uniform_real_distribution<double> unif(-0.5, 0.5);
+    this->weights = weight;
+    this->inputSize = weight.size();
+}
 
-    for (int i = 0; i < numberOfInputs; i++)  // Use numberOfInputs directly
+
+void Neuron::setBias(double bias)
+{
+    this->bias = bias;
+}
+
+
+double Neuron::getOutput(std::vector<double> inputs)
+{
+    double result = 0.0;
+
+    for (int i = 0; i < inputs.size(); i++)
     {
-        weights[i] = unif(re);
+        result += inputs[i] * weights[i];
     }
 
-    return weights;
+    return result += bias;
 }
 
 
@@ -35,26 +45,15 @@ double Neuron::initializeBias()
 }
 
 
-void Neuron::setWeights(double weight, int position)
+std::vector<double> Neuron::initializeWeights(int inputSize)
 {
-    weights[position] = weight;
-}
+    std::vector<double> weightsVec(inputSize);
+    std::uniform_real_distribution<double> unif(-0.5, 0.5);
 
-
-void Neuron::setBias(double weight)
-{
-    bias = weight;
-}
-
-
-double Neuron::getOutput(std::vector<double> inputs, std::vector<double> weights, int bias)
-{
-    double result = 0.0;
-
-    for (int i = 0; i < inputs.size(); i++)
+    for (int i = 0; i < inputSize; i++)
     {
-        result += inputs[i] * weights[i];
+        weightsVec[i] = unif(re);
     }
 
-    return result += bias;
+    return weightsVec;
 }

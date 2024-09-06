@@ -3,15 +3,22 @@
 
 std::vector<double> Activation(ActivationType activationFunction, std::vector<double> inputs)
 {
-
     double Z = 0.0;
+    double D = 0.0;
 
     switch (activationFunction)
     {
         case ActivationType::SOFTMAX: {
+            auto max_it = std::max_element(inputs.begin(), inputs.end());
+
+            // Check if the vector is not empty
+            if (max_it != inputs.end()) {
+                D = -*max_it;
+            }
+
             for (int j = 0; j < inputs.size(); j++)
             {
-                Z += exp(inputs[j]);
+                Z += exp(inputs[j]+D);
             }
             break;
         }
@@ -26,19 +33,21 @@ std::vector<double> Activation(ActivationType activationFunction, std::vector<do
         {
             case ActivationType::SIGMOID:
                 inputs[i] = 1 / (1 + exp(-inputs[i]));
-                break;  // Add break here
+                break;
                 
             case ActivationType::RELU:
                 inputs[i] = std::max(0.0, inputs[i]);
-                break;  // Add break here
+                break;
                 
             case ActivationType::TANH:
                 inputs[i] = tanh(inputs[i]);
-                break;  // Add break here
+                break;
                 
             case ActivationType::SOFTMAX:
-                inputs[i] = exp(inputs[i]) / Z;
-                break;  // Add break here
+                // Stable version of the softmax function
+                // https://eli.thegreenplace.net/2016/the-softmax-function-and-its-derivative/
+                inputs[i] = exp(inputs[i] + D) / Z;
+                break;
                 
             default:
                 break;
