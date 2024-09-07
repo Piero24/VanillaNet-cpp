@@ -129,29 +129,6 @@ void imageToVectorAndLabel(VectorLabel& vecLabel, std::string imagePath)
 }
 
 
-void infoPrinter(Arguments& inputParams)
-{
-    if (inputParams.Train && inputParams.Test)
-    {
-        printf("Training and Testing mode selected.\n");
-        printf("Training dataset path: %s\nTesting dataset path: %s\n", inputParams.TrainDatasetPath.c_str(), inputParams.TestDatasetPath.c_str());
-    }
-    else if (inputParams.Train)
-    {
-        printf("Training mode selected. Dataset path: %s\n", inputParams.TrainDatasetPath.c_str());
-    }
-    else if (inputParams.Test)
-    {
-        printf("Testing mode selected. Dataset path: %s\n", inputParams.TestDatasetPath.c_str());
-    }
-    else
-    {
-        printf("No mode selected.\n");
-        exit(1);
-    }
-}
-
-
 std::string getCurrentDateTime()
 {
     // Get current time

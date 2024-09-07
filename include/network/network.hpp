@@ -78,6 +78,7 @@ class Network {
          */
         std::vector<double> forwardPropagation(const std::vector<double>& inputs);
 
+
 };
 
 

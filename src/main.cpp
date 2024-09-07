@@ -37,6 +37,7 @@
 #include "weightsBiasExtractor.hpp"
 #include "train.hpp"
 #include "test.hpp"
+#include "printer.hpp"
 
 
 int main(int argc, char **argv)
@@ -48,8 +49,6 @@ int main(int argc, char **argv)
         return res;
     }
 
-    infoPrinter(inputParams);
-
     Network net;
     //net.addLayer(Layer(784, 128));
     net.addLayer(Layer(3, 3));
@@ -60,6 +59,9 @@ int main(int argc, char **argv)
 
     //! Remove after testing
     inputParams.hasWeightsBiases = true;
+    inputParams.WeightsBiasesPath = "./Resources/input/weights/weights.json";
+    
+    infoPrinter(inputParams, net);
 
     std::vector<BiasesWeights> importedWeightsAndBiases;
     weightsBiasExtractor(inputParams, importedWeightsAndBiases);

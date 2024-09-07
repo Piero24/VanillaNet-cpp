@@ -37,6 +37,7 @@ add_executable(VanillaNet-cpp
     src/main.cpp
     src/extractor/imageExtractor.cpp
     src/utils/toolkit.cpp
+    src/utils/printer.cpp
     src/utils/saveToJson.cpp
     src/network/neuron.cpp
     src/network/activation.cpp

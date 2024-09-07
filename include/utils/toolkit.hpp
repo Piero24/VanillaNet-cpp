@@ -8,6 +8,12 @@
 #include <chrono>
 #include <iomanip>  // For std::put_time
 #include <sstream>  // For std::ostringstream
+#include <sys/ioctl.h>
+#include <unistd.h>
+#include <cstring>
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 #include "imageExtractor.hpp"
 
@@ -180,16 +186,6 @@ int parser(Arguments& inputParams, int argc, char** inputToParse);
  *          properly configured and linked in your project.
  */
 void imageToVectorAndLabel(VectorLabel& vecLabel, std::string imagePath);
-
-
-/**
- * @brief 
- * 
- * @param inputParams 
- * 
- * @return
- */
-void infoPrinter(Arguments& inputParams);
 
 
 /**
