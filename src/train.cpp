@@ -1,10 +1,12 @@
 #include "train.hpp"
 
 
-int networkTrain(Arguments &inputParams, int epochs, int batchSize, double learningRate)
+int networkTrain(Network &net, Arguments &inputParams, int epochs, int batchSize, double learningRate)
 {
     if (!inputParams.Train)
         return 0;
+
+    std::vector<TrainResult> trainResults;
 
     // Shuffle the training data
     auto rng = std::default_random_engine {};
@@ -13,21 +15,46 @@ int networkTrain(Arguments &inputParams, int epochs, int batchSize, double learn
     {
         std::shuffle(inputParams.TrainDatasetImages.begin(), inputParams.TrainDatasetImages.end(), rng);
         std::vector<std::vector<std::string>> batches = splitIntoBatches(inputParams.TrainDatasetImages, batchSize);
+        int batchCount = 0;
 
         for(const auto& batch : batches)
         {
+            double lossSum = 0.0;
+
             for (const auto& imagePath : batch)
             {
-                // Load the image and label
+                TrainResult train;
+
                 VectorLabel vecLabel;
                 imageToVectorAndLabel(vecLabel, imagePath);
+                train.trueValue = vecLabel.label;
+                train.imagePath = imagePath;
+
+                train.epoch = i;
+                train.batch = batchCount;
 
                 // forward pass
-                // calculate loss
-                // backward pass
-                // update weights and biases
+                std::vector<double> outputOput = net.forwardPropagation(vecLabel.imagePixelVector);
 
+                // calculate loss
+                train.loss = mse_loss(vecLabel.labelVector, outputOput);
+                net.setLoss(train.loss, 0.0);
+                lossSum += train.loss;
+
+                trainResults.push_back(train);
             }
+            
+            // calculate average loss
+            double averageLoss = lossSum / batch.size();
+
+            // backward pass
+            // TODO: implement backpropagation                
+                
+            // update weights and biases
+            // TODO: implement weight and bias update
+
+            WeightsBiasesToJSON(net);
+            batchCount++;
         }
     }
 

@@ -51,9 +51,11 @@ int main(int argc, char **argv)
     infoPrinter(inputParams);
 
     Network net;
-    net.addLayer(Layer(784, 128));
+    //net.addLayer(Layer(784, 128));
+    net.addLayer(Layer(3, 3));
     net.addLayer(ActivationLayer(ActivationType::RELU));
-    net.addLayer(Layer(128, 10));
+    //net.addLayer(Layer(128, 10));
+    net.addLayer(Layer(3, 2));
     net.addLayer(ActivationLayer(ActivationType::SOFTMAX));
 
     //! Remove after testing
@@ -67,7 +69,7 @@ int main(int argc, char **argv)
     int epochs = 1;
     int batchSize = 32;
     double learningRate = 0.01;
-    networkTrain(inputParams, epochs, batchSize, learningRate);
+    networkTrain(net, inputParams, epochs, batchSize, learningRate);
 
     // TEST
     networkTest(net, inputParams);

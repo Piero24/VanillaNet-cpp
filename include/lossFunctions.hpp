@@ -23,7 +23,29 @@
  * @note Both vectors should have the same length. If they differ in size, this function may lead to 
  *       undefined behavior or errors.
  */
-double mse_loss(std::vector<double> yTrue, std::vector<double> yPredicted);
+double mse_loss(const std::vector<double>& yTrue, const std::vector<double>& yPredicted);
+
+
+/**
+ * @brief Computes the gradient of the Mean Squared Error (MSE) loss function.
+ * 
+ * The gradient of the Mean Squared Error (MSE) loss function is used in backpropagation to update the 
+ * weights and biases of the neural network. It represents the rate of change of the loss with respect 
+ * to the predicted values. The gradient is used to adjust the model parameters to minimize the loss.
+ * 
+ ** Formula: ∂MSE/∂yPredicted[i] = (2/n) * (yPredicted[i] - yTrue[i])
+ * 
+ * @param yTrue A vector of true/target values. This represents the actual values from the dataset.
+ * @param yPredicted A vector of predicted values. These are the values predicted by the model.
+ * 
+ * @return A vector containing the gradient of the Mean Squared Error (MSE) loss function with respect to 
+ *         each predicted value.
+ * 
+ * @note Both vectors should have the same length. If they differ in size, this function may lead to 
+ *       undefined behavior or errors.
+ */
+std::vector<double> mse_loss_prime(const std::vector<double>& yTrue, const std::vector<double>& yPredicted);
+
 
 
 #endif // LOSSFUNCTIONS_HPP

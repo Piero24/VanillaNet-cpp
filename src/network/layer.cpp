@@ -42,6 +42,16 @@ void Layer::importWeightsBiases(std::vector<std::vector<double>> weights, std::v
 }
 
 
+void Layer::saveWeightsBiases(std::vector<std::vector<double>>& weights, std::vector<double>& biases)
+{
+    for (int i = 0; i < neurons.size(); i++)
+    {
+        weights.push_back(neurons[i].weights);
+        biases.push_back(neurons[i].bias);
+    }
+}
+
+
 std::vector<double> Layer::forwardPass(std::vector<double> inputs)
 {
     std::vector<double> outputs;

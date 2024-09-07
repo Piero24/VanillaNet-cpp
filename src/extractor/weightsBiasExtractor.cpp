@@ -73,9 +73,39 @@ void weightsBiasExtractor(Arguments &inputParams, std::vector<BiasesWeights> &im
 {
     if (inputParams.hasWeightsBiases)
     {
-        // importedWeightsAndBiases = parseJSON("./Resources/output/weights/test.json");
-        importedWeightsAndBiases = parseJSON("./Resources/output/weights/mnist_fc128_relu_fc10_log_softmax_weights_biases.json");
+        importedWeightsAndBiases = parseJSON("./Resources/output/weights/test.json");
+        // importedWeightsAndBiases = parseJSON("./Resources/output/weights/mnist_fc128_relu_fc10_log_softmax_weights_biases.json");
         // importedWeightsAndBiases = parseJSON("./Resources/output/weights/mnist_fc128_relu_fc10_sigmoid_weights_biases.json");
         // jsonValuePrinter(importedWeightsAndBiases);
+    }
+}
+
+
+nlohmann::json serializeWeightsBiases(const std::vector<BiasesWeights>& savedWB)
+{
+    nlohmann::json jsonObject;
+
+    for (const auto& wb : savedWB)
+    {
+        jsonObject[wb.WeightsName] = wb.weights;
+        jsonObject[wb.BiasName] = wb.biases;
+    }
+
+    return jsonObject;
+}
+
+
+void writeJsonToFile(const nlohmann::json& jsonObject, const std::string& filePath)
+{
+    std::ofstream file(filePath);
+    
+    if (file.is_open())
+    {
+        file << jsonObject.dump(4);  // Pretty print JSON with an indentation of 4 spaces
+        file.close();
+        std::cout << "JSON written to " << filePath << std::endl;
+    } else
+    {
+        std::cerr << "Unable to open file " << filePath << std::endl;
     }
 }

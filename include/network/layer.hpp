@@ -82,6 +82,19 @@ class Layer {
 
 
         /**
+         * @brief Saves the weights and biases of the layer's neurons.
+         * 
+         * This method retrieves the weights and biases of each neuron in the layer and stores
+         * them in the provided vectors. It appends the weights and biases of each neuron to the
+         * respective vectors.
+         * 
+         * @param weights A 2D vector to store the weights of each neuron.
+         * @param biases A vector to store the biases of each neuron.
+         */
+        void saveWeightsBiases(std::vector<std::vector<double>>& weights, std::vector<double>& biases);
+
+
+        /**
          * @brief Computes the output of the layer based on its neurons.
          * 
          * This method retrieves the outputs from each neuron and returns them as a

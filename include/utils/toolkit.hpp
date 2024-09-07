@@ -5,6 +5,9 @@
 #include <string>
 #include <filesystem>
 #include <vector>
+#include <chrono>
+#include <iomanip>  // For std::put_time
+#include <sstream>  // For std::ostringstream
 
 #include "imageExtractor.hpp"
 
@@ -187,6 +190,18 @@ void imageToVectorAndLabel(VectorLabel& vecLabel, std::string imagePath);
  * @return
  */
 void infoPrinter(Arguments& inputParams);
+
+
+/**
+ * @brief Return the current date and time as a string.
+ * 
+ * This function retrieves the current date and time from the system clock and
+ * formats it as a string in the format "YYYY-MM-DD HH:MM:SS". The resulting string
+ * contains the year, month, day, hour, minute, and second separated by hyphens and colons.
+ * 
+ * @return A string representing the current date and time in the format "YYYY-MM-DD HH:MM:SS" (MM_DD_YY_HH_mm_ss).
+ */
+std::string getCurrentDateTime();
 
 
 #endif // TOOLKIT_HPP

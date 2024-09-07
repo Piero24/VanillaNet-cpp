@@ -47,6 +47,31 @@ void Network::importWeightsBiases(std::vector<BiasesWeights> weightsBiases)
 }
 
 
+std::vector<BiasesWeights> Network::saveWeightsBiases()
+{
+    std::vector<BiasesWeights> weightsBiases;
+    int idx = 1;
+
+    for (int i = 0; i < Layers.size(); i++)
+    {
+        // Identify the type of layer using the polymorphic method getType
+        if (Layers[i]->getType() == LayerType::StandardLayer)
+        {
+            BiasesWeights bw;
+            Layers[i]->saveWeightsBiases(bw.weights, bw.biases);
+
+            bw.LayerIndex = idx++;
+            bw.BiasName = "fc" + std::to_string(bw.LayerIndex) + ".bias";
+            bw.WeightsName = "fc" + std::to_string(bw.LayerIndex) + ".weight";
+
+            weightsBiases.push_back(bw);
+        }
+    }
+
+    return weightsBiases;
+}
+
+
 void Network::setLoss(double loss, double lossPrime)
 {
     this->loss = loss;

@@ -69,4 +69,29 @@ void jsonValuePrinter(const std::vector<BiasesWeights>& importedWeightsAndBiases
 void weightsBiasExtractor(Arguments &inputParams, std::vector<BiasesWeights> &importedWeightsAndBiases);
 
 
+/**
+ * @brief Serializes the biases and weights from a vector of BiasesWeights to a JSON object.
+ * 
+ * This function converts a vector of `BiasesWeights` structures to a JSON object, storing the 
+ * biases and weights for each layer. The JSON object is then returned for further processing 
+ * or saving to a file.
+ * 
+ * @param savedWB The vector containing biases and weights for each layer.
+ * @return nlohmann::json The JSON object containing the biases and weights for each layer.
+ */
+nlohmann::json serializeWeightsBiases(const std::vector<BiasesWeights>& savedWB);
+
+
+/**
+ * @brief Writes a JSON object to a file.
+ * 
+ * This function writes a JSON object to a file specified by the file path. The JSON object 
+ * is formatted with indentation for readability.
+ * 
+ * @param jsonObject The JSON object to write to the file.
+ * @param filePath The path to the file where the JSON object will be saved.
+ */
+void writeJsonToFile(const nlohmann::json& jsonObject, const std::string& filePath);
+
+
 #endif // WEIGHTSBIASEXTRACTOR_HPP

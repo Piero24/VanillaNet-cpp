@@ -56,6 +56,14 @@ class Network {
         /**
          * @brief 
          * 
+         * @return
+         */
+        std::vector<BiasesWeights> saveWeightsBiases();
+
+
+        /**
+         * @brief 
+         * 
          * @param loss 
          * @param lossPrime 
          */
