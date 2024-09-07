@@ -48,7 +48,7 @@ int networkTrain(Network &net, Arguments &inputParams, int epochs, int batchSize
             double averageLoss = lossSum / batch.size();
 
             // backward pass
-            // TODO: implement backpropagation                
+            // TODO: implement backpropagation
                 
             // update weights and biases
             // TODO: implement weight and bias update

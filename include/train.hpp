@@ -23,6 +23,8 @@ struct TrainResult
 
 int networkTrain(Network &net, Arguments &inputParams, int epochs, int batchSize, double learningRate);
 
+
 std::vector<std::vector<std::string>> splitIntoBatches(const std::vector<std::string>& inputVec, int batchSize);
+
 
 #endif // TRAIN_HPP
