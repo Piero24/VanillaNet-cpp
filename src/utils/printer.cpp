@@ -127,7 +127,7 @@ void infoPrinter(Arguments& inputParams, Network& net)
         // Identify the type of layer using the polymorphic method getType
         if (net.Layers[i]->getType() == LayerType::StandardLayer)
         {
-            std::cout << std::endl << "                               " << j << ") F.C. " << net.Layers[i]->outputSize << " neurons ";
+            std::cout << std::endl << "                               " << j << ") F.C. input: " << net.Layers[i]->inputSize << " neurons: " << net.Layers[i]->outputSize;
             j++;
         }
         else if (net.Layers[i]->getType() == LayerType::ActivationLayer)
@@ -136,7 +136,7 @@ void infoPrinter(Arguments& inputParams, Network& net)
             ActivationLayer* activationLayer = dynamic_cast<ActivationLayer*>(net.Layers[i].get());
             if (activationLayer != nullptr)
             {
-               std::cout << "A.F.: " << ActivationTypeToString(activationLayer->activationFunction);
+               std::cout << " A.F.: " << ActivationTypeToString(activationLayer->activationFunction);
             }
         }
     }

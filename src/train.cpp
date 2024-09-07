@@ -58,6 +58,14 @@ int networkTrain(Network &net, Arguments &inputParams, int epochs, int batchSize
         }
     }
 
+    printCentered(" TRAINING RESULTS ", '*');
+    printf("\nCorrectly Classified:  %d/%d\t\t\t\t\t\t", 0, 0);
+    printf("Accuracy:  %.2f%%\t\t\t\t\t\t", 10.0);
+    printf("Average loss:  %.2f\t\t\t", 0.0);
+
+    printf("\n\n");
+    printHorizontalLine('*');
+
     return 0;
 }
 

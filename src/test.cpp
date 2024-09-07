@@ -29,14 +29,21 @@ int networkTest(Network &net, Arguments &inputParams)
     }
 
     int correct = 0;
+    double averageLoss = 0.0;
     for (const auto& testResult : testResults)
     {
         correct += testResult.trueValue == testResult.predictedValue;
+        averageLoss += testResult.loss;
     }
+    averageLoss /= testResults.size();
 
-    std::cout << "Test results: " << std::endl;
-    std::cout << "Total correct classifications: " << correct << " out of " << testResults.size() << std::endl;
-    std::cout << "Accuracy: " << 100*((double)correct / testResults.size())  << "%" << std::endl;
+    printCentered(" TESTING RESULTS ", '*');
+    printf("\nCorrectly Classified:  %d/%ld\t\t\t\t\t\t", correct, testResults.size());
+    printf("Accuracy:  %.2f%%\t\t\t\t\t\t", 100.0 * ((double)correct / testResults.size()));
+    printf("Average loss:  %f\t\t\t", averageLoss);
+
+    printf("\n\n");
+    printHorizontalLine('*');
 
     // std::cout << "\n\nWrong predictions: " << std::endl;
     // for (const auto& testResult : testResults)

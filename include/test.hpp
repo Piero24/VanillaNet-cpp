@@ -4,6 +4,7 @@
 #include "network.hpp"
 #include "toolkit.hpp"
 #include "lossFunctions.hpp"
+#include "printer.hpp"
 
 
 struct TestResult

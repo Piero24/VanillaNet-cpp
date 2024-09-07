@@ -8,6 +8,7 @@
 #include "network.hpp"
 #include "lossFunctions.hpp"
 #include "saveToJson.hpp"
+#include "printer.hpp"
 
 
 struct TrainResult
