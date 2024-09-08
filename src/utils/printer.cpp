@@ -145,12 +145,13 @@ void infoPrinter(Arguments& inputParams, Network& net)
     
     if (inputParams.Train)
     {
-        std::cout << "- Optimizer:                   Stochastic Gradient Descent" << std::endl;
-        std::cout << "- Learning Rate:               " << std::endl;
-        std::cout << "- Batch Size:                  " << std::endl;
-        std::cout << "- Epochs:                      " << std::endl;
+        std::cout << "- Optimizer:                   (SGD) Stochastic Gradient Descent" << std::endl;
+        std::cout << "\n- Epochs:                      " << inputParams.epochs << std::endl;
+        std::cout << "- Batch Size:                  " << inputParams.batchSize << std::endl;
+        std::cout << "- Learning Rate:               " << inputParams.learningRate << std::endl;
     }
 
     printf("\n");
 	printHorizontalLine('*');
+    printf("\n");
 }

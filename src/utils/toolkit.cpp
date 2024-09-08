@@ -144,3 +144,20 @@ std::string getCurrentDateTime()
 
     return oss.str();
 }
+
+
+std::string getCurrentDate()
+{
+    // Get current time
+    auto now = std::chrono::system_clock::now();
+    std::time_t now_time = std::chrono::system_clock::to_time_t(now);
+
+    // Create a tm structure to hold local time
+    std::tm* localTime = std::localtime(&now_time);
+
+    // Use a stringstream to format the date and time
+    std::ostringstream oss;
+    oss << std::put_time(localTime, "%m_%d_%y");
+
+    return oss.str();
+}

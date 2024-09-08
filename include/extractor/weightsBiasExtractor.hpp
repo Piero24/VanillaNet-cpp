@@ -90,8 +90,10 @@ nlohmann::json serializeWeightsBiases(const std::vector<BiasesWeights>& savedWB)
  * 
  * @param jsonObject The JSON object to write to the file.
  * @param filePath The path to the file where the JSON object will be saved.
+ * 
+ * @return int Returns 0 if the JSON object is successfully written to the file, or -1 if an error occurs.
  */
-void writeJsonToFile(const nlohmann::json& jsonObject, const std::string& filePath);
+int writeJsonToFile(const nlohmann::json& jsonObject, const std::string& filePath);
 
 
 #endif // WEIGHTSBIASEXTRACTOR_HPP

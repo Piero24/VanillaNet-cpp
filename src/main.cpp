@@ -44,10 +44,7 @@ int main(int argc, char **argv)
 {
     Arguments inputParams;
     int res = parser(inputParams, argc, argv);
-    if (res != 0)
-    {
-        return res;
-    }
+    if (res != 0) return res;
 
     Network net;
     //net.addLayer(Layer(784, 128));
@@ -60,6 +57,10 @@ int main(int argc, char **argv)
     //! Remove after testing
     inputParams.hasWeightsBiases = true;
     inputParams.WeightsBiasesPath = "./Resources/input/weights/weights.json";
+    inputParams.learningRate = 0.01;
+    inputParams.batchSize = 32;
+    inputParams.epochs = 2;
+    //!
     
     infoPrinter(inputParams, net);
 
@@ -68,10 +69,7 @@ int main(int argc, char **argv)
     net.importWeightsBiases(importedWeightsAndBiases);
 
     // TRAIN
-    int epochs = 1;
-    int batchSize = 32;
-    double learningRate = 0.01;
-    networkTrain(net, inputParams, epochs, batchSize, learningRate);
+    networkTrain(net, inputParams);
 
     // TEST
     networkTest(net, inputParams);

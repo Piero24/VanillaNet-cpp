@@ -95,17 +95,16 @@ nlohmann::json serializeWeightsBiases(const std::vector<BiasesWeights>& savedWB)
 }
 
 
-void writeJsonToFile(const nlohmann::json& jsonObject, const std::string& filePath)
+int writeJsonToFile(const nlohmann::json& jsonObject, const std::string& filePath)
 {
     std::ofstream file(filePath);
     
     if (file.is_open())
     {
-        file << jsonObject.dump(4);  // Pretty print JSON with an indentation of 4 spaces
+        // Pretty print JSON with an indentation of 4 spaces
+        file << jsonObject.dump(4);
         file.close();
-        std::cout << "JSON written to " << filePath << std::endl;
-    } else
-    {
-        std::cerr << "Unable to open file " << filePath << std::endl;
+        return 0;
     }
+    return 1;
 }

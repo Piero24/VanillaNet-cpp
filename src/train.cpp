@@ -1,7 +1,7 @@
 #include "train.hpp"
 
 
-int networkTrain(Network &net, Arguments &inputParams, int epochs, int batchSize, double learningRate)
+int networkTrain(Network &net, Arguments &inputParams)
 {
     if (!inputParams.Train)
         return 0;
@@ -10,16 +10,22 @@ int networkTrain(Network &net, Arguments &inputParams, int epochs, int batchSize
 
     // Shuffle the training data
     auto rng = std::default_random_engine {};
+    int totCorrect = 0;
+    double totalLoss = 0.0;
 
-    for (int i = 0; i < epochs; i++)
+    for (int i = 0; i < inputParams.epochs; i++)
     {
         std::shuffle(inputParams.TrainDatasetImages.begin(), inputParams.TrainDatasetImages.end(), rng);
-        std::vector<std::vector<std::string>> batches = splitIntoBatches(inputParams.TrainDatasetImages, batchSize);
+        std::vector<std::vector<std::string>> batches = splitIntoBatches(inputParams.TrainDatasetImages, inputParams.batchSize);
         int batchCount = 0;
+        double epochSumLoss = 0.0;
+        int epochCorrect = 0;
 
         for(const auto& batch : batches)
         {
             double lossSum = 0.0;
+            int imageCount = 0;
+            int batchCorrect = 0;
 
             for (const auto& imagePath : batch)
             {
@@ -40,12 +46,29 @@ int networkTrain(Network &net, Arguments &inputParams, int epochs, int batchSize
                 train.loss = mse_loss(vecLabel.labelVector, outputOput);
                 net.setLoss(train.loss, 0.0);
                 lossSum += train.loss;
+                totalLoss += train.loss;
+                epochSumLoss += train.loss;
 
+                auto max_element_iter = std::max_element(outputOput.begin(), outputOput.end());
+
+                if (max_element_iter != outputOput.end())
+                    train.predictedValue = std::distance(outputOput.begin(), max_element_iter);
+
+                totCorrect += train.trueValue == train.predictedValue;
+                batchCorrect += train.trueValue == train.predictedValue;
+                epochCorrect += train.trueValue == train.predictedValue;
+
+                // printf(">>>> Epoch: %d/%d     Batch: %d/%ld     Sample: %d/%ld     Loss: %.6f     Batch Accuracy: %.2f%%     Predicted: %d     True: %d\n\n", i+1, inputParams.epochs, batchCount+1, batches.size(), imageCount+1, batch.size(), train.loss, 100.0 * ((double)batchCorrect / batch.size()), train.predictedValue, train.trueValue);
+
+                imageCount++;
                 trainResults.push_back(train);
             }
-            
+
             // calculate average loss
             double averageLoss = lossSum / batch.size();
+
+            printf(">>> Epoch: %d/%d     Batch: %d/%ld     Average Loss: %.6f     Batch Accuracy: %.2f%%     Correctly Predicted: %d/%ld\n\n", i+1, inputParams.epochs, batchCount+1, batches.size(), averageLoss, 100.0 * ((double)batchCorrect / batch.size()), batchCorrect, batch.size());
+            
 
             // backward pass
             // TODO: implement backpropagation
@@ -53,15 +76,21 @@ int networkTrain(Network &net, Arguments &inputParams, int epochs, int batchSize
             // update weights and biases
             // TODO: implement weight and bias update
 
-            WeightsBiasesToJSON(net);
+            std::string jsonPath = WeightsBiasesToJSON(net);
+            // printf(">> Weights and biases saved to: %s\n\n", jsonPath.c_str());
             batchCount++;
         }
+
+
+        printf(">> Epoch: %d/%d     Average Loss: %.6f     Accuracy: %.2f%%     Correctly Predicted: %d/%ld\n\n", i+1, inputParams.epochs, ((double)epochSumLoss / inputParams.TrainDatasetImages.size()), 100.0 * ((double)epochCorrect / inputParams.TrainDatasetImages.size()), epochCorrect, inputParams.TrainDatasetImages.size());
+
     }
 
+    printf("\n");
     printCentered(" TRAINING RESULTS ", '*');
-    printf("\nCorrectly Classified:  %d/%d\t\t\t\t\t\t", 0, 0);
-    printf("Accuracy:  %.2f%%\t\t\t\t\t\t", 10.0);
-    printf("Average loss:  %.2f\t\t\t", 0.0);
+    printf("\nCorrectly Classified:  %d/%ld\t\t\t\t\t\t\t\t\t\t", totCorrect, inputParams.TrainDatasetImages.size()*inputParams.epochs);
+    printf("Accuracy:  %.2f%%\t\t\t\t\t\t\t\t\t\t", 100.0 * ((double)totCorrect / inputParams.TrainDatasetImages.size()*inputParams.epochs));
+    printf("Average loss:  %.5f\t\t", (totalLoss / inputParams.TrainDatasetImages.size()*inputParams.epochs));
 
     printf("\n\n");
     printHorizontalLine('*');

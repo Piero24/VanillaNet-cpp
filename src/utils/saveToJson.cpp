@@ -6,12 +6,16 @@ std::string WeightsBiasesToJSON(Network& net)
     std::vector<BiasesWeights> savedWB = net.saveWeightsBiases();
     nlohmann::json jsonWeightsBiases = serializeWeightsBiases(savedWB);
     //std::cout << jsonWeightsBiases.dump(4) << std::endl;
+    
+    std::string currDate = getCurrentDate();
+    std::string currentDateTime = getCurrentDateTime();
 
-    std::string filePath = "./Resources/output/weights/";
+    std::string filePath = "./Resources/output/weights/" + currDate + "/";
+    
     makeFolder("./Resources", "output");
     makeFolder("./Resources/output", "weights");
+    makeFolder("./Resources/output/weights/", currDate);
 
-    std::string currentDateTime = getCurrentDateTime();
     std::string fileName;
 
     for (int i = 0; i < net.Layers.size(); i++)
@@ -32,7 +36,9 @@ std::string WeightsBiasesToJSON(Network& net)
         }
     }
 
-    filePath = filePath + "/" + fileName + currentDateTime + ".json";
-    writeJsonToFile(jsonWeightsBiases, filePath);
+    filePath = filePath + fileName + currentDateTime + ".json";
+    int res = writeJsonToFile(jsonWeightsBiases, filePath);
+    if (res != 0) return "";
+
     return filePath;
 }

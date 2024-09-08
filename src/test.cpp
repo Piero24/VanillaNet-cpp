@@ -37,10 +37,11 @@ int networkTest(Network &net, Arguments &inputParams)
     }
     averageLoss /= testResults.size();
 
+    printf("\n");
     printCentered(" TESTING RESULTS ", '*');
-    printf("\nCorrectly Classified:  %d/%ld\t\t\t\t\t\t", correct, testResults.size());
-    printf("Accuracy:  %.2f%%\t\t\t\t\t\t", 100.0 * ((double)correct / testResults.size()));
-    printf("Average loss:  %f\t\t\t", averageLoss);
+    printf("\nCorrectly Classified:  %d/%ld\t\t\t\t\t\t\t\t\t\t", correct, testResults.size());
+    printf("Accuracy:  %.2f%%\t\t\t\t\t\t\t\t\t\t", 100.0 * ((double)correct / testResults.size()));
+    printf("Average loss:  %.5f\t\t", averageLoss);
 
     printf("\n\n");
     printHorizontalLine('*');

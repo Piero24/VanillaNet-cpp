@@ -22,7 +22,7 @@ struct TrainResult
 };
 
 
-int networkTrain(Network &net, Arguments &inputParams, int epochs, int batchSize, double learningRate);
+int networkTrain(Network &net, Arguments &inputParams);
 
 
 std::vector<std::vector<std::string>> splitIntoBatches(const std::vector<std::string>& inputVec, int batchSize);

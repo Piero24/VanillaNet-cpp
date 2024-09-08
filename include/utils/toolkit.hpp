@@ -68,6 +68,9 @@ struct Arguments
     std::string TestDatasetPath = "";
     std::vector<std::string> TestDatasetImages;
     std::string WeightsBiasesPath = "";
+    double learningRate = 0.0;
+    int batchSize = 0;
+    int epochs = 0;
 };
 
 
@@ -198,6 +201,18 @@ void imageToVectorAndLabel(VectorLabel& vecLabel, std::string imagePath);
  * @return A string representing the current date and time in the format "YYYY-MM-DD HH:MM:SS" (MM_DD_YY_HH_mm_ss).
  */
 std::string getCurrentDateTime();
+
+
+/**
+ * @brief Return the current date as a string.
+ * 
+ * This function retrieves the current date from the system clock and
+ * formats it as a string in the format "YYYY-MM-DD". The resulting string
+ * contains the year, month, and day separated by hyphens.
+ * 
+ * @return A string representing the current date in the format "YYYY-MM-DD" (MM_DD_YY).
+ */
+std::string getCurrentDate();
 
 
 #endif // TOOLKIT_HPP
