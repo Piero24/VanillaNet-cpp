@@ -56,7 +56,7 @@
 <br/><br/>
 <h2 id="itroduction">📔  Itroduction</h2>
 <p>
-    This project is a straightforward implementation of a fully connected neural network in C++. It doesn’t rely on external machine learning libraries—only the standard C++ libraries are used, with two exceptions: OpenCV for extracting pixel values from images and nlohmann/json for saving weights and biases in a JSON file.
+    This project is a straightforward implementation of a fully connected neural network in C++. It <strong>doesn’t rely on external machine learning libraries—only</strong> the standard C++ libraries are used, with two exceptions: OpenCV for extracting pixel values from images and nlohmann/json for saving weights and biases in a JSON file.
 </p>
 <br/>
 <p>
@@ -69,11 +69,11 @@
 </div>
 <br/>
 <p>
-    The neural network used for the training is a simple feedforward neural network with one hidden layer. The input layer consists of 784 neurons, corresponding to the 28x28 pixel values of the input image. The hidden layer consists of 128 neurons, and the output layer consists of 10 neurons, each representing a digit from 0 to 9. The activation function used for the hidden layer is the ReLU function, and the output layer uses the NOTSPECIFIED function.
+    The neural network used for the training is a simple feedforward neural network with one hidden layer. The <strong>input layer consists of 784 neurons</strong>, corresponding to the 28x28 pixel values of the input image. The <strong>hidden layer consists of 128 neurons</strong>, and the <strong>output layer consists of 10 neurons</strong>, each representing a digit from 0 to 9. The activation function used for the hidden layer is the ReLU function, and the output layer uses the NOTSPECIFIED function.
 </p>
 
 > [!NOTE]
-> The neural network is trained on the MNIST dataset, which consists of 60,000 training images and 10,000 test images. Each image is a 28x28 grayscale image of a handwritten digit. The dataset is preprocessed and saved in CSV format. It can be downloaded from Kaggle at the following link: [MNIST in CSV](https://www.kaggle.com/datasets/oddrationale/mnist-in-csv).
+> The neural network is trained on the **MNIST** dataset, which consists of **60,000 training images** and **10,000 test images**. Each image is a **28x28** grayscale image of a handwritten digit. The dataset is preprocessed and saved in CSV format. It can be downloaded from Kaggle at the following link: [MNIST in CSV](https://www.kaggle.com/datasets/oddrationale/mnist-in-csv).
     
 <br/>
 
@@ -82,14 +82,10 @@
 <p>
     This project is entirely written in C++ and uses the OpenCV for extract the pixels value from the image and nlohmann/json for saving weights and biases in a JSON file.
 </p>
-<br/>
 <p align="center">
     <a href="https://cplusplus.com">C++</a> • <a href="https://opencv.org">OpenCV</a> • <a href="https://github.com/nlohmann/json">nlohmann/json</a>
 </p>
-
-
 <p align="right"><a href="#top">⇧</a></p>
-
 
 <h2 id="documentation"><br/><br/>📚  Documentation</h2>
 
@@ -97,10 +93,10 @@
 > In the file [mnist_fc128_relu_fc10_log_softmax_weights_biases.json](https://github.com/Piero24/VanillaNet-cpp/blob/main/Resources/output/weights/mnist_fc128_relu_fc10_log_softmax_weights_biases.json) are the weights and biases present in the trained model which allowed to obtain an accuracy of 98%.
 
 <p>
-    The neural network is fully customizable. You can define the number of inputs for each neuron, the number of neurons for each layer, the total number of layers, and even the activation function for each layer individually (ReLU, Sigmoid, Tanh, Softmax). This flexibility allows you to tailor the network architecture to suit a wide range of tasks, from simple binary classification to more complex multi-class problems.
+    The neural network is fully customizable. You can define the number of inputs for each neuron, the number of neurons for each layer, the total number of layers, and even the activation function for each layer individually <strong>(ReLU, Sigmoid, Tanh, Softmax)</strong>. This flexibility allows you to tailor the network architecture to suit a wide range of tasks, from simple binary classification to more complex multi-class problems.
 </p>
 <p>
-    Additionally, for the training phase, you have the option to set key hyperparameters such as the number of epochs, the learning rate, and the batch size, giving you full control over the optimization process. If you have an additional dataset, it’s also possible to use it to train the network by making the necessary adjustments to the code, allowing for easy experimentation with different data and configurations.
+    Additionally, for the training phase, you have the option to set key hyperparameters such as the number of <strong>epochs</strong>, the <strong>learning rate</strong>, and the <strong>batch size</strong>, giving you full control over the optimization process. If you have an additional dataset, it’s also possible to use it to train the network by making the necessary adjustments to the code, allowing for easy experimentation with different data and configurations.
 </p>
 <p>
     This customizable approach ensures that the network can be adapted to a variety of use cases, helping to deepen your understanding of how different architectures and training parameters affect performance.
@@ -128,34 +124,79 @@ If you have a mac and `homebrew` installed, you can install OpenCV by running th
 brew install opencv
 ```
 
+<br/>
+
+Also download the dataset from the following link: [MNIST in CSV](https://www.kaggle.com/datasets/oddrationale/mnist-in-csv).
+
 <p align="right"><a href="#top">⇧</a></p>
 
 
 <h2 id="how-to-start"><br/>⚙️  How to Start</h2>
 <p>
-    Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services.
+    Depending if you want to train the model or use a pre-trained model, you have different parameters that you can use. For a more detailed list of the parameters, you can refer to the <a href="https://github.com/Piero24/VanillaNet-cpp/blob/main/.github/doc.md">Documentation »</a>.
 </p>
 <br/>
 
-
-1. Get a free API Key  <a href="https://example.com">here</a>
-2. Clone the repo
+1. Clone the repo
   
 ```sh
-git clone https://github.com/your_username_/Project-Name.git
+git clone https://github.com/Piero24/VanillaNet-cpp.git
 ```
 
-3. Install NPM packages
-  
-```sh
-npm install
-```
+> [!IMPORTANT] 
+> The following commands (n° 2) for building the project with `cmake`are only for Unix systems. For Windows, the commands are slightly different. You can easily find the instructions on the official CMake website. (Or just ask to chatGPT for converting the commands 😉).
 
-4. Enter your API in `config.js`
+2. From the folder of the project, run the following commands:
+
+    2.1 Create a build directory
   
-```js
-const API_KEY = 'ENTER YOUR API';
-```
+    ```sh
+    mkdir build
+    ```
+
+    2.2 Generate build files in the build directory
+  
+    ```sh
+    cmake -S . -B build
+    ```
+
+    2.3 Build the project inside the build directory
+  
+    ```sh
+    make -C build
+    ```
+3. [ONLY IF YOU WANT TO USE THE MNIST DATASET] Create a folder inside `./Resources/Dataset/csv/` and put the datasets in csv format inside it.To esxtract the images from the csv file, run the following command:
+
+    ```sh
+    ./VanillaNet-cpp -csv ./Resources/Dataset/csv/
+    ```
+
+    The images will be saved in the folder `./Resources/Dataset/mnist_test` and `./Resources/Dataset/mnist_train`.
+
+4. Now as described before the parameter that you have to pass deends on if you want to train the model or use a pre-trained model. or make both the training and the testing.
+
+    4.1 If you want ONLY to train the model, run the following command:
+  
+    ```sh
+    ./VanillaNet-cpp -Tr <path_to_training_dataset> -E <number_of_epochs> -LR <learning_rate> -BS <batch_size>
+    ```
+
+    4.2 If you want ONLY to test the model, run the following command:
+  
+    ```sh
+    ./VanillaNet-cpp -Te <path_to_testing_dataset> -wb <path_to_weights_and_biases>
+    ```
+
+    4.3 Train and test the model:
+  
+    ```sh
+    ./VanillaNet-cpp -Tr <path_to_training_dataset> -E <number_of_epochs> -LR <learning_rate> -BS <batch_size> -Te <path_to_testing_dataset> -wb <path_to_weights_and_biases>
+    ```
+
+> [!NOTE] 
+> 1. During the training phase the weight and biases are sevide multiple times in the folder `Resources/output/weights/` in order to have a backup of the weights and biases at the end of each epoch.
+> 2. If you are using the MNIST dataset, you have to replace the `<path_to_training_dataset>` with the path to the folder `./Resources/Dataset/mnist_train` and `<path_to_testing_dataset>` with the path to the folder `./Resources/Dataset/mnist_test`.
+
 
 <p align="right"><a href="#top">⇧</a></p>
 

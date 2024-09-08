@@ -81,6 +81,18 @@ int parser(Arguments& inputParams, int argc, char** inputToParse)
             inputParams.WeightsBiasesPath = inputToParse[i + 1];
             inputParams.hasWeightsBiases = true;
         }
+        else if (strcmp(inputToParse[i], "-Epochs") == 0 || strcmp(inputToParse[i], "-E") == 0)
+        {
+            inputParams.epochs = std::stoi(inputToParse[i + 1]);
+        }
+        else if (strcmp(inputToParse[i], "-LearningRate") == 0 || strcmp(inputToParse[i], "-LR") == 0)
+        {
+            inputParams.learningRate = std::stoi(inputToParse[i + 1]);
+        }
+        else if (strcmp(inputToParse[i], "-BatchSize") == 0 || strcmp(inputToParse[i], "-BS") == 0)
+        {
+            inputParams.batchSize = std::stoi(inputToParse[i + 1]);
+        }
         else if (strcmp(inputToParse[i], "-help") == 0 || strcmp(inputToParse[i], "-h") == 0)
         {
             // TODO
