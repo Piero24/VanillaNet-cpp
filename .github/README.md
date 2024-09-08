@@ -63,7 +63,7 @@
     The aim of this project is to build the neural network from the ground up, offering a deeper understanding of how neural networks function internally. While frameworks like TensorFlow or PyTorch make it easy to implement neural networks with minimal effort, it’s crucial to grasp the underlying mechanics. There’s no better way to achieve this than by coding a neural network from scratch. This hands-on approach fosters a much stronger comprehension of the inner workings of neural networks, from weight initialization to forward propagation and backpropagation.
 </p>
 <br/>
-<div style="text-align: center;">
+<div align="center">
     <img src="https://miro.medium.com/v2/resize:fit:640/format:webp/0*u5-PcKYVfUE5s2by.gif" style="width: 100%;">
     <p>Image credits to: <a href="https://medium.com/analytics-vidhya/applying-ann-digit-and-fashion-mnist-13accfc44660">Medium</a></p>
 </div>
@@ -110,7 +110,7 @@
 > If you have a pythorch model and you want to try this project with yourt weights and biases, you can export them from the `.pt` to `.json` by using the script [ptToJson](https://github.com/Piero24/VanillaNet-cpp/blob/main/src/scripts/ptToJson.py).
 
 <p>
-    For a broader view it is better to refer the user to the documentation via links: <a href="https://shields.io/">Documentation »</a>
+    For a broader view it is better to refer the user to the documentation via links: <a href="https://github.com/Piero24/VanillaNet-cpp/blob/main/.github/doc.md">Documentation »</a>
 </p>
 
 
