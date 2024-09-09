@@ -1,10 +1,22 @@
 <!--**RELEASED-DATA**-->
 <!--**NOTSPECIFIED**-->
 
+<!-- 
+https://medium.com/@thakeenathees/neural-network-from-scratch-c-e2dc8977646b
+http://www.code-spot.co.za/2009/10/08/15-steps-to-implemented-a-neural-net/
+https://aicodewizards.com/2021/12/12/neural-network-from-scratch-part-5-c-deep-learning-framework-implementation/
+https://medium.com/geekculture/neural-networks-from-scratch-a-simple-fully-connected-feed-forward-network-in-c-29e9542bcdef
+https://www.hyugen.com/article/neural-network-in-c-from-scratch-and-backprop-free-optimizers-821f318b32
+https://contentlab.com/c-neural-network-in-a-weekend/
+https://www.reddit.com/r/MachineLearning/comments/3mdvxv/neural_net_in_c_for_absolute_beginners_super_easy/
+https://theaisummer.com/Neural_Network_from_scratch/
+https://mattmazur.com/2015/03/17/a-step-by-step-backpropagation-example/
+https://pub.aimind.so/building-a-neural-network-from-scratch-in-python-a-step-by-step-guide-8f8cab064c8a
+-->
+
 <div id="top"></div>
 <br/>
 <br/>
-
 
 <p align="center">
   <img src="https://cdn-icons-png.flaticon.com/512/6768/6768194.png" width="105" height="100">
@@ -64,7 +76,7 @@
 </p>
 <br/>
 <div align="center">
-    <img src="https://miro.medium.com/v2/resize:fit:640/format:webp/0*u5-PcKYVfUE5s2by.gif" style="width: 100%;">
+    <img src="https://miro.medium.com/v2/resize:fit:640/format:webp/0*u5-PcKYVfUE5s2by.gif" style="width: 100%;" width="100%">
     <p>Image credits to: <a href="https://medium.com/analytics-vidhya/applying-ann-digit-and-fashion-mnist-13accfc44660">Medium</a></p>
 </div>
 <br/>
@@ -74,16 +86,64 @@
 
 > [!NOTE]
 > The neural network is trained on the **MNIST** dataset, which consists of **60,000 training images** and **10,000 test images**. Each image is a **28x28** grayscale image of a handwritten digit. The dataset is preprocessed and saved in CSV format. It can be downloaded from Kaggle at the following link: [MNIST in CSV](https://www.kaggle.com/datasets/oddrationale/mnist-in-csv).
-    
-<br/>
 
+<div align="center">
+    <img src="https://datasets.activeloop.ai/wp-content/uploads/2019/12/MNIST-handwritten-digits-dataset-visualized-by-Activeloop.webp" style="width: 100%;" width="100%">
+    <p>Image credits to: <a href="https://datasets.activeloop.ai/docs/ml/datasets/">deeplake</a></p>
+</div>
+
+<br/>  
+<p>
+    <strong>INTRO</strong>: The program take in input a dataset of images and for each image it extract the pixel values to have a vector of 748 elements (since the images are 28x28 in the MNIST dataset). This first layer is also called the input layer. From this poin the real network is created, by inizializing two extra layers, the hidden layer and the output layer. The hidden layer has 128 neurons and the output layer has 10 neurons. The hidden layer uses the ReLU activation function and the output layer uses the NOTSPECIFIED activation function. Since on the creation of the network the weights and biases are randomly initialized at this point the selected weights and biased are loaded if provided.
+</p>
+<p>
+    <strong>TRAINING</strong>: The training phase is simple as all the neural network of this type. By showing all the dataset to the network divided in batches for a certain number of epochs, the network adjust the value of the weights an biases of eache layer following these steps:
+    <ol>
+        <li>
+            <strong>Forward Propagation</strong>
+            <p>
+                Images are showed to the network and the output is calculated. By making the basic matehmatical operation and also by applying the activation function.
+            </p>
+        </li>
+        <li>
+            <strong>Calculate the loss</strong>
+            <p>
+                After each forward propagation the loss is calculated. The loss is calculated by using the cross entropy loss function that is the most used for classification problems.
+            </p>
+        </li>
+        <li>
+            <strong>Backward Propagation</strong>
+            <p>
+                The backpropagation is the most important part of the training phase. It is the phase where the network adjust the weights and biases of each layer. In this project I have used the gradient descent algorithm (SGD) to adjust the weights and biases.
+            </p>
+        </li>
+        <li>
+            <strong>Update the weights and biases</strong>
+            <p>
+                Then the vector of the weights and biases are updated on the network.
+            </p>
+        </li>
+    </ol>
+</p>
+<br/>
+<div align="center">
+    <img src="https://miro.medium.com/v2/resize:fit:640/format:webp/0*d9yJ5xIqdbDyjCYR.gif" style="width: 100%;" width="100%">
+    <p>Image credits to: <a href="https://medium.com/analytics-vidhya/applying-ann-digit-and-fashion-mnist-13accfc44660">Medium</a></p>
+</div>
+<br/>
+<br/>
+<p>
+    <strong>TEST</strong>:  The test phase is more simple than the training phase. The network is tested on a dataset that it has never seen before. The images are showed to the network and the forward pass is made. The output is compared with the real value of the image and the accuracy is calculated.
+</p>
+
+<br/>
 
 <h2 id="made-in"><br/>🛠  Built in</h2>
 <p>
     This project is entirely written in C++ and uses the OpenCV for extract the pixels value from the image and nlohmann/json for saving weights and biases in a JSON file.
 </p>
 <p align="center">
-    <a href="https://cplusplus.com">C++</a> • <a href="https://opencv.org">OpenCV</a> • <a href="https://github.com/nlohmann/json">nlohmann/json</a>
+    <a href="https://cplusplus.com">C++</a> • <a href="https://opencv.org">OpenCV</a> • <a href="https://github.com/nlohmann/json">nlohmann/json</a> • <a href="https://cmake.org">cmake</a>
 </p>
 <p align="right"><a href="#top">⇧</a></p>
 

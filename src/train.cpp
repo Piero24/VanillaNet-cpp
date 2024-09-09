@@ -89,7 +89,7 @@ int networkTrain(Network &net, Arguments &inputParams)
     printf("\n");
     printCentered(" TRAINING RESULTS ", '*');
     printf("\nCorrectly Classified:  %d/%ld\t\t\t\t\t\t\t\t\t\t", totCorrect, inputParams.TrainDatasetImages.size()*inputParams.epochs);
-    printf("Accuracy:  %.2f%%\t\t\t\t\t\t\t\t\t\t", 100.0 * ((double)totCorrect / inputParams.TrainDatasetImages.size()*inputParams.epochs));
+    printf("Accuracy:  %.2f%%\t\t\t\t\t\t\t\t\t\t", 100.0 * ((double)totCorrect / (inputParams.TrainDatasetImages.size()*inputParams.epochs)));
     printf("Average loss:  %.5f\t\t", (totalLoss / inputParams.TrainDatasetImages.size()*inputParams.epochs));
 
     printf("\n\n");

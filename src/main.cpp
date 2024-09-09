@@ -47,10 +47,10 @@ int main(int argc, char **argv)
     if (res != 0) return res;
 
     Network net;
-    //net.addLayer(Layer(784, 128));
+    // net.addLayer(Layer(784, 128));
     net.addLayer(Layer(3, 3));
     net.addLayer(ActivationLayer(ActivationType::RELU));
-    //net.addLayer(Layer(128, 10));
+    // net.addLayer(Layer(128, 10));
     net.addLayer(Layer(3, 2));
     net.addLayer(ActivationLayer(ActivationType::SOFTMAX));
 

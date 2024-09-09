@@ -87,7 +87,7 @@ int parser(Arguments& inputParams, int argc, char** inputToParse)
         }
         else if (strcmp(inputToParse[i], "-LearningRate") == 0 || strcmp(inputToParse[i], "-LR") == 0)
         {
-            inputParams.learningRate = std::stoi(inputToParse[i + 1]);
+            inputParams.learningRate = std::stod(inputToParse[i + 1]);
         }
         else if (strcmp(inputToParse[i], "-BatchSize") == 0 || strcmp(inputToParse[i], "-BS") == 0)
         {
@@ -96,6 +96,8 @@ int parser(Arguments& inputParams, int argc, char** inputToParse)
         else if (strcmp(inputToParse[i], "-help") == 0 || strcmp(inputToParse[i], "-h") == 0)
         {
             // TODO
+            std::cout << "Not complited yet." << std::endl;
+            return -1;
         } 
         // else
         // {
@@ -113,6 +115,11 @@ int parser(Arguments& inputParams, int argc, char** inputToParse)
     if (inputParams.Train && strcmp(inputParams.TrainDatasetPath.c_str(), "") == 0)
     {
         std::cout << "Training mode selected. Please provide a training dataset path." << std::endl;
+        return -1;
+    }
+    if (inputParams.Train && (inputParams.epochs == 0 || inputParams.learningRate == 0.0 || inputParams.batchSize == 0))
+    {
+        std::cout << "Training mode selected. Please provide the number of epochs, learning rate, and batch size." << std::endl;
         return -1;
     }
     if (inputParams.Test && strcmp(inputParams.TestDatasetPath.c_str(), "") == 0)
