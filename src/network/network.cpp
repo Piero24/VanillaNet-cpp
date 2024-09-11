@@ -4,6 +4,7 @@
 Network::Network() {
     this->loss = 0.0;
     this->lossPrime = 0.0;
+    this->output = std::vector<double>();
 }
 
 
@@ -81,12 +82,36 @@ void Network::setLoss(double loss, double lossPrime)
 
 std::vector<double> Network::forwardPropagation(const std::vector<double>& inputs)
 {
-    std::vector<double> outputs = inputs;
+    this->output = inputs;
 
     for (size_t i = 0; i < Layers.size(); i++)
     {
-        outputs = Layers[i]->forwardPass(outputs);
+        this->output = Layers[i]->forwardPass(this->output);
     }
 
-    return outputs;
+    return this->output;
+}
+
+
+std::vector<BiasesWeights> Network::backPropagation(const std::vector<double>& outputError)
+{
+    std::vector<double> error = outputError;
+    std::vector<BiasesWeights> weightsBiases;
+
+    for (int i = Layers.size() - 1; i >= 0; i--)
+    {
+        BiasesWeights gradients;
+
+        if (Layers[i]->getType() == LayerType::StandardLayer)
+        {
+            Layers[i]->backwardPass(error, gradients.weights, gradients.biases);
+
+            gradients.LayerIndex = i + 1;
+            gradients.BiasName = "fc" + std::to_string(gradients.LayerIndex) + ".bias";
+            gradients.WeightsName = "fc" + std::to_string(gradients.LayerIndex) + ".weight";
+
+            weightsBiases.push_back(gradients);
+        }
+        else error = Layers[i]->backwardPass(error, gradients.weights, gradients.biases);
+    }
 }

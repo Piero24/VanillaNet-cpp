@@ -34,6 +34,7 @@ class Layer {
         std::vector<Neuron> neurons;                ///< A vector containing the neurons in the layer.
         int inputSize;                              ///< The number of inputs to each neuron in the layer.
         int outputSize;                             ///< The number of neurons in the layer.
+        std::vector<double> outputs;                ///< The output of the layer.
 
 
         /**
@@ -104,6 +105,16 @@ class Layer {
          * @return A vector of output values corresponding to each neuron.
          */
         virtual std::vector<double> forwardPass(std::vector<double> inputs);
+
+
+        /**
+         * @brief
+         * 
+         * @param weights
+         * @param biases
+         */
+        virtual std::vector<double> backwardPass(std::vector<double>& error, std::vector<std::vector<double>>& weights, std::vector<double>& biases);
+
     
 
     private:
@@ -167,6 +178,15 @@ class ActivationLayer : public Layer {
          * @return A vector of output values after applying the activation function.
          */
         std::vector<double> forwardPass(std::vector<double> inputs) override;
+
+
+        /**
+         * @brief
+         * 
+         * @param weights
+         * @param biases
+         */
+        std::vector<double> backwardPass(std::vector<double>& error, std::vector<std::vector<double>>& weights, std::vector<double>& biases) override;
 
 };
 

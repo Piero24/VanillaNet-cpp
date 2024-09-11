@@ -52,13 +52,14 @@ int main(int argc, char **argv)
     net.addLayer(ActivationLayer(ActivationType::RELU));
     // net.addLayer(Layer(128, 10));
     net.addLayer(Layer(3, 2));
-    net.addLayer(ActivationLayer(ActivationType::SOFTMAX));
+    net.addLayer(ActivationLayer(ActivationType::SIGMOID));
 
     //! Remove after testing
-    inputParams.hasWeightsBiases = true;
-    inputParams.WeightsBiasesPath = "./Resources/input/weights/weights.json";
+    // inputParams.hasWeightsBiases = true;
+    // inputParams.WeightsBiasesPath = "./Resources/input/weights/weights.json";
+    // inputParams.WeightsBiasesPath = "./Resources/output/weights/mnist_fc128_relu_fc10_log_softmax_weights_biases.json";
     inputParams.learningRate = 0.01;
-    inputParams.batchSize = 32;
+    inputParams.batchSize = 1;
     inputParams.epochs = 2;
     //!
     

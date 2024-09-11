@@ -5,7 +5,8 @@
 
 #include "layer.hpp"
 #include "weightsBiasExtractor.hpp"
-
+#include "activation.hpp"
+#include "lossFunctions.hpp"
 
 /**
  * @brief 
@@ -20,6 +21,7 @@ class Network {
         double lossPrime;                            ///< The derivative of the loss function.
         int standardLayerCount = 0;                  ///< The number of standard layers in the network.
         int activationLayerCount = 0;                ///< The number of activation layers in the network.
+        std::vector<double> output;                  ///< The output of the network.
 
 
         /**
@@ -77,6 +79,11 @@ class Network {
          * @return 
          */
         std::vector<double> forwardPropagation(const std::vector<double>& inputs);
+
+
+        /**
+         */
+        std::vector<BiasesWeights> backPropagation(const std::vector<double>& outputError);
 
 
 };

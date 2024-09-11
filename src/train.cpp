@@ -27,6 +27,11 @@ int networkTrain(Network &net, Arguments &inputParams)
             int imageCount = 0;
             int batchCorrect = 0;
 
+            // Initialize the batch error vector
+            std::vector<double> batchError;
+            // TODO Change the 10 with the number of neuron in the last layer
+            batchError.resize(3, 0.0);
+
             for (const auto& imagePath : batch)
             {
                 TrainResult train;
@@ -40,7 +45,9 @@ int networkTrain(Network &net, Arguments &inputParams)
                 train.batch = batchCount;
 
                 // forward pass
-                std::vector<double> outputOput = net.forwardPropagation(vecLabel.imagePixelVector);
+                // std::vector<double> outputOput = net.forwardPropagation(vecLabel.imagePixelVector);
+                std::vector<double> outputOput = net.forwardPropagation({1, 2, 3});
+                vecLabel.labelVector = {1, 0, 0};
 
                 // calculate loss
                 train.loss = mse_loss(vecLabel.labelVector, outputOput);
@@ -48,6 +55,15 @@ int networkTrain(Network &net, Arguments &inputParams)
                 lossSum += train.loss;
                 totalLoss += train.loss;
                 epochSumLoss += train.loss;
+
+                // calculate error
+                std::vector<double> error = mse_loss_prime(vecLabel.labelVector, outputOput);
+
+                // 
+                for (size_t j = 0; j < error.size(); ++j)
+                {
+                    batchError[j] += error[j];
+                }
 
                 auto max_element_iter = std::max_element(outputOput.begin(), outputOput.end());
 
@@ -58,7 +74,7 @@ int networkTrain(Network &net, Arguments &inputParams)
                 batchCorrect += train.trueValue == train.predictedValue;
                 epochCorrect += train.trueValue == train.predictedValue;
 
-                // printf(">>>> Epoch: %d/%d     Batch: %d/%ld     Sample: %d/%ld     Loss: %.6f     Batch Accuracy: %.2f%%     Predicted: %d     True: %d\n\n", i+1, inputParams.epochs, batchCount+1, batches.size(), imageCount+1, batch.size(), train.loss, 100.0 * ((double)batchCorrect / batch.size()), train.predictedValue, train.trueValue);
+                //printf(">>>> Epoch: %d/%d     Batch: %d/%ld     Sample: %d/%ld     Loss: %.6f     Batch Accuracy: %.2f%%     Predicted: %d     True: %d\n\n", i+1, inputParams.epochs, batchCount+1, batches.size(), imageCount+1, batch.size(), train.loss, 100.0 * ((double)batchCorrect / batch.size()), train.predictedValue, train.trueValue);
 
                 imageCount++;
                 trainResults.push_back(train);
@@ -69,9 +85,11 @@ int networkTrain(Network &net, Arguments &inputParams)
 
             printf(">>> Epoch: %d/%d     Batch: %d/%ld     Average Loss: %.6f     Batch Accuracy: %.2f%%     Correctly Predicted: %d/%ld\n\n", i+1, inputParams.epochs, batchCount+1, batches.size(), averageLoss, 100.0 * ((double)batchCorrect / batch.size()), batchCorrect, batch.size());
             
+            for (size_t j = 0; j < batchError.size(); ++j)
+                batchError[j] /= batch.size();
 
             // backward pass
-            // TODO: implement backpropagation
+            net.backPropagation(batchError);
                 
             // update weights and biases
             // TODO: implement weight and bias update

@@ -225,7 +225,7 @@ git clone https://github.com/Piero24/VanillaNet-cpp.git
     ```sh
     make -C build
     ```
-3. [ONLY IF YOU WANT TO USE THE MNIST DATASET] Create a folder inside `./Resources/Dataset/csv/` and put the datasets in csv format inside it.To esxtract the images from the csv file, run the following command:
+3. [ONLY IF YOU WANT TO USE A DATASED COMPRESSED IN A CSV LIKE THE MNIST DATASET] Create a folder inside `./Resources/Dataset/csv/` and put the datasets in csv format inside it.To esxtract the images from the csv file, run the following command:
 
     ```sh
     ./VanillaNet-cpp -csv ./Resources/Dataset/csv/
@@ -259,7 +259,7 @@ git clone https://github.com/Piero24/VanillaNet-cpp.git
 
 <br/>
 <div align="center">
-    <img src="out.png" style="width: 100%;" width="100%">
+    <img src="https://raw.githubusercontent.com/Piero24/VanillaNet-cpp/main/.github/out.png" style="width: 100%;" width="100%">
 </div>
 <br/>
 <p align="right"><a href="#top">⇧</a></p>
