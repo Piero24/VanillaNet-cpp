@@ -71,11 +71,7 @@ std::vector<double> Layer::forwardPass(std::vector<double> inputs)
 
 std::vector<double> Layer::backwardPass(std::vector<double>& error, std::vector<std::vector<double>>& weights, std::vector<double>& biases)
 {
-    for (int i = 0; i < neurons.size(); i++)
-    {
-        
-    }
-
+    
 }
 
 
@@ -110,8 +106,7 @@ std::vector<double> ActivationLayer::forwardPass(std::vector<double> inputs)
 std::vector<double> ActivationLayer::backwardPass(std::vector<double>& error, std::vector<std::vector<double>>& weights, std::vector<double>& biases)
 {
     ActivationType sel_dAct = select_dActivation(this->activationFunction);
-    std::vector<double> dInput = Activation(sel_dAct, error);
-    exit(0);
+    std::vector<double> dInput = Activation(sel_dAct, this->inputs);
 
     for (int i = 0; i < error.size(); i++)
         error[i] *= dInput[i];

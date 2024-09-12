@@ -82,6 +82,7 @@ void Network::setLoss(double loss, double lossPrime)
 
 std::vector<double> Network::forwardPropagation(const std::vector<double>& inputs)
 {
+    this->inputs = inputs;
     this->output = inputs;
 
     for (size_t i = 0; i < Layers.size(); i++)
