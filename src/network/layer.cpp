@@ -54,6 +54,8 @@ void Layer::saveWeightsBiases(std::vector<std::vector<double>>& weights, std::ve
 
 std::vector<double> Layer::forwardPass(std::vector<double> inputs)
 {
+    this -> inputs = inputs;
+
     std::vector<double> outputs;
     outputs.reserve(neurons.size());
 
@@ -99,6 +101,7 @@ ActivationLayer::ActivationLayer(ActivationType activationFunction) : Layer(0, 0
 
 std::vector<double> ActivationLayer::forwardPass(std::vector<double> inputs)
 {
+    this -> inputs = inputs;
     this->outputs = Activation(this->activationFunction, inputs);
     return this->outputs;
 }
@@ -107,5 +110,12 @@ std::vector<double> ActivationLayer::forwardPass(std::vector<double> inputs)
 std::vector<double> ActivationLayer::backwardPass(std::vector<double>& error, std::vector<std::vector<double>>& weights, std::vector<double>& biases)
 {
     ActivationType sel_dAct = select_dActivation(this->activationFunction);
-    return Activation(sel_dAct, error);
+    std::vector<double> dInput = Activation(sel_dAct, error);
+    exit(0);
+
+    for (int i = 0; i < error.size(); i++)
+        error[i] *= dInput[i];
+    
+    return error;
+
 }

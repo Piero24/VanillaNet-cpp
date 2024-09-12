@@ -83,7 +83,7 @@ class Network {
 
         /**
          */
-        std::vector<BiasesWeights> backPropagation(const std::vector<double>& outputError);
+        std::vector<BiasesWeights> backwardPropagation(const std::vector<double>& outputError);
 
 
 };

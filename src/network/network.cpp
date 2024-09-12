@@ -93,7 +93,7 @@ std::vector<double> Network::forwardPropagation(const std::vector<double>& input
 }
 
 
-std::vector<BiasesWeights> Network::backPropagation(const std::vector<double>& outputError)
+std::vector<BiasesWeights> Network::backwardPropagation(const std::vector<double>& outputError)
 {
     std::vector<double> error = outputError;
     std::vector<BiasesWeights> weightsBiases;

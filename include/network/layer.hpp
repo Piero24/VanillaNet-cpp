@@ -34,6 +34,7 @@ class Layer {
         std::vector<Neuron> neurons;                ///< A vector containing the neurons in the layer.
         int inputSize;                              ///< The number of inputs to each neuron in the layer.
         int outputSize;                             ///< The number of neurons in the layer.
+        std::vector<double> inputs;                 ///< The input of the layer.
         std::vector<double> outputs;                ///< The output of the layer.
 
 

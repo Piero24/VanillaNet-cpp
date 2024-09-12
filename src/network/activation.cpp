@@ -1,6 +1,5 @@
 #include "activation.hpp"
 
-
 std::vector<double> Activation(ActivationType activationFunction, std::vector<double> inputs)
 {
     double Z = 0.0;
@@ -45,8 +44,8 @@ std::vector<double> Activation(ActivationType activationFunction, std::vector<do
                 break;
             
             case ActivationType::RELU_PRIME:
-                if (inputs[i] > 0.0) inputs[i] = 1;
-                else inputs[i] = 0;
+                if (inputs[i] > 0.00) inputs[i] = 1.0;
+                else inputs[i] = 0.0;
                 break;
                 
             case ActivationType::TANH:

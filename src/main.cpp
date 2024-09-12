@@ -52,7 +52,7 @@ int main(int argc, char **argv)
     net.addLayer(ActivationLayer(ActivationType::RELU));
     // net.addLayer(Layer(128, 10));
     net.addLayer(Layer(3, 2));
-    net.addLayer(ActivationLayer(ActivationType::SIGMOID));
+    net.addLayer(ActivationLayer(ActivationType::RELU));
 
     //! Remove after testing
     // inputParams.hasWeightsBiases = true;
@@ -74,6 +74,6 @@ int main(int argc, char **argv)
 
     // TEST
     networkTest(net, inputParams);
-    
+
     return 0;
 }

@@ -27,11 +27,6 @@ int networkTrain(Network &net, Arguments &inputParams)
             int imageCount = 0;
             int batchCorrect = 0;
 
-            // Initialize the batch error vector
-            std::vector<double> batchError;
-            // TODO Change the 10 with the number of neuron in the last layer
-            batchError.resize(3, 0.0);
-
             for (const auto& imagePath : batch)
             {
                 TrainResult train;
@@ -59,11 +54,8 @@ int networkTrain(Network &net, Arguments &inputParams)
                 // calculate error
                 std::vector<double> error = mse_loss_prime(vecLabel.labelVector, outputOput);
 
-                // 
-                for (size_t j = 0; j < error.size(); ++j)
-                {
-                    batchError[j] += error[j];
-                }
+                // backward pass
+                net.backwardPropagation(error);
 
                 auto max_element_iter = std::max_element(outputOput.begin(), outputOput.end());
 
@@ -84,12 +76,6 @@ int networkTrain(Network &net, Arguments &inputParams)
             double averageLoss = lossSum / batch.size();
 
             printf(">>> Epoch: %d/%d     Batch: %d/%ld     Average Loss: %.6f     Batch Accuracy: %.2f%%     Correctly Predicted: %d/%ld\n\n", i+1, inputParams.epochs, batchCount+1, batches.size(), averageLoss, 100.0 * ((double)batchCorrect / batch.size()), batchCorrect, batch.size());
-            
-            for (size_t j = 0; j < batchError.size(); ++j)
-                batchError[j] /= batch.size();
-
-            // backward pass
-            net.backPropagation(batchError);
                 
             // update weights and biases
             // TODO: implement weight and bias update
