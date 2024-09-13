@@ -1,6 +1,5 @@
 #include "train.hpp"
 
-
 int networkTrain(Network &net, Arguments &inputParams)
 {
     if (!inputParams.Train)
@@ -88,14 +87,11 @@ int networkTrain(Network &net, Arguments &inputParams)
         printf(">> Epoch: %d/%d     Average Loss: %.6f     Accuracy: %.2f%%     Correctly Predicted: %d/%ld\n\n", i+1, inputParams.epochs, ((double)epochSumLoss / inputParams.TrainDatasetImages.size()), 100.0 * ((double)epochCorrect / inputParams.TrainDatasetImages.size()), epochCorrect, inputParams.TrainDatasetImages.size());
     }
 
-    printf("\n");
-    printCentered(" TRAINING RESULTS ", '*');
-    printf("\nCorrectly Classified:  %d/%ld\t\t\t\t\t\t\t\t\t\t", totCorrect, inputParams.TrainDatasetImages.size()*inputParams.epochs);
-    printf("Accuracy:  %.2f%%\t\t\t\t\t\t\t\t\t\t", 100.0 * ((double)totCorrect / (inputParams.TrainDatasetImages.size()*inputParams.epochs)));
-    printf("Average loss:  %.5f\t\t", (totalLoss / inputParams.TrainDatasetImages.size()*inputParams.epochs));
+    std::string title = " TRAINING RESULTS ";
+    double lossToPrint = (totalLoss / inputParams.TrainDatasetImages.size()*inputParams.epochs);
+    double acc = 100.0 * ((double)totCorrect / (inputParams.TrainDatasetImages.size()*inputParams.epochs));
 
-    printf("\n\n");
-    printHorizontalLine('*');
+    finalResultPrinter(acc, lossToPrint, totCorrect, inputParams.TrainDatasetImages.size()*inputParams.epochs, title);
 
     return 0;
 }

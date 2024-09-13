@@ -155,3 +155,27 @@ void infoPrinter(Arguments& inputParams, Network& net)
 	printHorizontalLine('*');
     printf("\n");
 }
+
+void finalResultPrinter(double accuracy, double loss, int corrects, int total, std::string title)
+{
+    int termWidth = getTerminalWidth();
+
+    std::ostringstream ossAcc, ossLoss;
+    ossAcc << std::fixed << std::setprecision(2) << accuracy;
+    ossLoss << std::fixed << std::setprecision(5) << loss;
+
+    std::string correctClassifiedStr = "Correctly Classified: " + std::to_string(corrects) + "/" + std::to_string(total);
+    std::string accuracyStr = "Accuracy: " + ossAcc.str() + "%";
+    std::string avgLossStr = "Average loss: " + ossLoss.str();
+
+    // Calculate spacing
+    int leftPadding = (termWidth - 45 - correctClassifiedStr.length()) / 2;
+    int rightPadding = termWidth - (leftPadding + 25 + correctClassifiedStr.length() + accuracyStr.length());
+
+    printf("\n");
+    printCentered(title, '*');
+    std::cout << "\n" << std::left << correctClassifiedStr;
+    std::cout << std::setw(leftPadding + accuracyStr.length()) << std::right << accuracyStr;
+    std::cout << std::setw(rightPadding + avgLossStr.length()) << std::right << avgLossStr << "\n" << std::endl;
+    printHorizontalLine('*');
+}

@@ -7,6 +7,7 @@
 #include <sys/ioctl.h>
 #include <unistd.h>
 #include <cstring>
+#include <iomanip> // For std::setw
 #ifdef _WIN32
 #include <windows.h>
 #endif
@@ -42,6 +43,8 @@ void printHorizontalLine(char c);
  * @return
  */
 void infoPrinter(Arguments& inputParams, Network& net);
+
+void finalResultPrinter(double accuracy, double loss, int corrects, int total, std::string title);
 
 
 #endif // PRINTER_HPP

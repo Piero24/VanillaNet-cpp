@@ -124,21 +124,21 @@ void Network::updateWeightsBiases(const std::vector<std::vector<BiasesWeights>>&
     std::vector<BiasesWeights> average = calculateAverageGradients(accumulatedGrad);
     std::reverse(average.begin(), average.end());
 
-    for (int i = 0; i < average.size(); i++)
-    {
-        for (int j = 0; j < average[i].biases.size(); j++)
-        {
-            printf("average[%d].biases[%d]: %.6f\n", i, j, average[i].biases[j]);
-        }
+    // for (int i = 0; i < average.size(); i++)
+    // {
+    //     for (int j = 0; j < average[i].biases.size(); j++)
+    //     {
+    //         printf("average[%d].biases[%d]: %.6f\n", i, j, average[i].biases[j]);
+    //     }
 
-        for (int j = 0; j < average[i].weights.size(); j++)
-        {
-            for (int k = 0; k < average[i].weights[j].size(); k++)
-            {
-                printf("average[%d].weights[%d][%d]: %.6f\n", i, j, k, average[i].weights[j][k]);
-            }
-        }
-    }
+    //     for (int j = 0; j < average[i].weights.size(); j++)
+    //     {
+    //         for (int k = 0; k < average[i].weights[j].size(); k++)
+    //         {
+    //             printf("average[%d].weights[%d][%d]: %.6f\n", i, j, k, average[i].weights[j][k]);
+    //         }
+    //     }
+    // }
 
     int averageIndex = 0;
     if (average.size() == 0) return;
