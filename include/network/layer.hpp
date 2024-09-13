@@ -116,6 +116,10 @@ class Layer {
          */
         virtual std::vector<double> backwardPass(std::vector<double>& error, std::vector<std::vector<double>>& weights, std::vector<double>& biases);
 
+        /**
+         * @brief
+         */
+        void updateWeightsBiases(double learningRate, std::vector<std::vector<double>> weights, std::vector<double> biases);
     
 
     private:

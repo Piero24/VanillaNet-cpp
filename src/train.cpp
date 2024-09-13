@@ -27,6 +27,8 @@ int networkTrain(Network &net, Arguments &inputParams)
             int imageCount = 0;
             int batchCorrect = 0;
 
+            std::vector<std::vector<BiasesWeights>> accumulatedGrad;
+            
             for (const auto& imagePath : batch)
             {
                 TrainResult train;
@@ -39,10 +41,7 @@ int networkTrain(Network &net, Arguments &inputParams)
                 train.epoch = i;
                 train.batch = batchCount;
 
-                // forward pass
-                // std::vector<double> outputOput = net.forwardPropagation(vecLabel.imagePixelVector);
-                std::vector<double> outputOput = net.forwardPropagation({1, 2, 3});
-                vecLabel.labelVector = {1, 0, 0};
+                std::vector<double> outputOput = net.forwardPropagation(vecLabel.imagePixelVector);
 
                 // calculate loss
                 train.loss = mse_loss(vecLabel.labelVector, outputOput);
@@ -55,7 +54,8 @@ int networkTrain(Network &net, Arguments &inputParams)
                 std::vector<double> error = mse_loss_prime(vecLabel.labelVector, outputOput);
 
                 // backward pass
-                net.backwardPropagation(error);
+                std::vector<BiasesWeights> gradWeightsBiases = net.backwardPropagation(error);
+                accumulatedGrad.push_back(gradWeightsBiases);
 
                 auto max_element_iter = std::max_element(outputOput.begin(), outputOput.end());
 
@@ -66,7 +66,7 @@ int networkTrain(Network &net, Arguments &inputParams)
                 batchCorrect += train.trueValue == train.predictedValue;
                 epochCorrect += train.trueValue == train.predictedValue;
 
-                //printf(">>>> Epoch: %d/%d     Batch: %d/%ld     Sample: %d/%ld     Loss: %.6f     Batch Accuracy: %.2f%%     Predicted: %d     True: %d\n\n", i+1, inputParams.epochs, batchCount+1, batches.size(), imageCount+1, batch.size(), train.loss, 100.0 * ((double)batchCorrect / batch.size()), train.predictedValue, train.trueValue);
+                // printf(">>>> Epoch: %d/%d     Batch: %d/%ld     Sample: %d/%ld     Loss: %.6f     Batch Accuracy: %.2f%%     Predicted: %d     True: %d\n\n", i+1, inputParams.epochs, batchCount+1, batches.size(), imageCount+1, batch.size(), train.loss, 100.0 * ((double)batchCorrect / batch.size()), train.predictedValue, train.trueValue);
 
                 imageCount++;
                 trainResults.push_back(train);
@@ -78,16 +78,14 @@ int networkTrain(Network &net, Arguments &inputParams)
             printf(">>> Epoch: %d/%d     Batch: %d/%ld     Average Loss: %.6f     Batch Accuracy: %.2f%%     Correctly Predicted: %d/%ld\n\n", i+1, inputParams.epochs, batchCount+1, batches.size(), averageLoss, 100.0 * ((double)batchCorrect / batch.size()), batchCorrect, batch.size());
                 
             // update weights and biases
-            // TODO: implement weight and bias update
+            net.updateWeightsBiases(accumulatedGrad, inputParams.learningRate);
 
             std::string jsonPath = WeightsBiasesToJSON(net);
             // printf(">> Weights and biases saved to: %s\n\n", jsonPath.c_str());
             batchCount++;
         }
 
-
         printf(">> Epoch: %d/%d     Average Loss: %.6f     Accuracy: %.2f%%     Correctly Predicted: %d/%ld\n\n", i+1, inputParams.epochs, ((double)epochSumLoss / inputParams.TrainDatasetImages.size()), 100.0 * ((double)epochCorrect / inputParams.TrainDatasetImages.size()), epochCorrect, inputParams.TrainDatasetImages.size());
-
     }
 
     printf("\n");

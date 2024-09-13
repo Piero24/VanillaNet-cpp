@@ -83,10 +83,21 @@ class Network {
 
 
         /**
+         * @note: https://mattmazur.com/2015/03/17/a-step-by-step-backpropagation-example/
          */
         std::vector<BiasesWeights> backwardPropagation(const std::vector<double>& outputError);
 
 
+        /**
+         */
+        void updateWeightsBiases(const std::vector<std::vector<BiasesWeights>>& accumulatedGrad, double learningRate);
+    
+
+    private:
+
+        /**
+         */
+        std::vector<BiasesWeights> calculateAverageGradients(const std::vector<std::vector<BiasesWeights>>& accumulatedGrad);
 };
 
 

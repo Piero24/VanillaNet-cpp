@@ -47,16 +47,14 @@ int main(int argc, char **argv)
     if (res != 0) return res;
 
     Network net;
-    // net.addLayer(Layer(784, 128));
-    net.addLayer(Layer(3, 3));
+    net.addLayer(Layer(784, 128));
     net.addLayer(ActivationLayer(ActivationType::RELU));
-    // net.addLayer(Layer(128, 10));
-    net.addLayer(Layer(3, 2));
-    net.addLayer(ActivationLayer(ActivationType::RELU));
+    net.addLayer(Layer(128, 10));
+    net.addLayer(ActivationLayer(ActivationType::SIGMOID));
 
     //! Remove after testing
     // inputParams.hasWeightsBiases = true;
-    // inputParams.WeightsBiasesPath = "./Resources/input/weights/weights.json";
+    // inputParams.WeightsBiasesPath = "./Resources/output/weights/test.json";
     // inputParams.WeightsBiasesPath = "./Resources/output/weights/mnist_fc128_relu_fc10_log_softmax_weights_biases.json";
     inputParams.learningRate = 0.01;
     inputParams.batchSize = 1;

@@ -7,18 +7,16 @@ std::vector<double> Activation(ActivationType activationFunction, std::vector<do
 
     switch (activationFunction)
     {
-        case ActivationType::SOFTMAX: {
+        case ActivationType::SOFTMAX:
+        {
             auto max_it = std::max_element(inputs.begin(), inputs.end());
 
             // Check if the vector is not empty
-            if (max_it != inputs.end()) {
+            if (max_it != inputs.end())
                 D = -*max_it;
-            }
 
             for (int j = 0; j < inputs.size(); j++)
-            {
                 Z += exp(inputs[j]+D);
-            }
             break;
         }
         
@@ -35,8 +33,7 @@ std::vector<double> Activation(ActivationType activationFunction, std::vector<do
                 break;
             
             case ActivationType::SIGMOID_PRIME:
-                //inputs[i] = inputs[i] * (1 - inputs[i]);
-                inputs[i] = (1 / (1 + exp(-inputs[i]))) * (1 - (1 / (1 + exp(-inputs[i]))));
+                inputs[i] = inputs[i] * (1 - inputs[i]);
                 break;
                 
             case ActivationType::RELU:
@@ -126,5 +123,8 @@ ActivationType select_dActivation(ActivationType activationFunction)
         default:
             break;
     }
+
+    printf("[WARNING]: Activation function not supported - Returned the given activation function.\n");
+    return activationFunction;
 
 }
