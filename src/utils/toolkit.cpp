@@ -137,8 +137,11 @@ void imageToVectorAndLabel(VectorLabel& vecLabel, std::string imagePath)
     // std::string imagePath = "./Resources/Dataset/mnist_train/image_0_1.png";
     cv::Mat inputImage = cv::imread(imagePath, cv::IMREAD_GRAYSCALE);
 
+    // Convert the image to CV_64F (double precision) and normalize to [0, 1]
     cv::Mat fImage; 
-    inputImage.convertTo(fImage, CV_64F);
+    inputImage.convertTo(fImage, CV_64F, 1.0 / 255.0); // Normalize to [0, 1]
+    
+    // Create a vector from the image data
     std::vector<double> imagePixelVector(fImage.begin<double>(), fImage.end<double>());
     vecLabel.imagePixelVector = imagePixelVector;
     // printf("Image size: %ld\n", imagePixelVector.size());

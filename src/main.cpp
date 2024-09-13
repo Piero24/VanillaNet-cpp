@@ -56,9 +56,9 @@ int main(int argc, char **argv)
     // inputParams.hasWeightsBiases = true;
     // inputParams.WeightsBiasesPath = "./Resources/output/weights/test.json";
     // inputParams.WeightsBiasesPath = "./Resources/output/weights/mnist_fc128_relu_fc10_log_softmax_weights_biases.json";
-    inputParams.learningRate = 0.1;
-    inputParams.batchSize = 1000;
-    inputParams.epochs = 2;
+    inputParams.learningRate = 0.5;
+    inputParams.batchSize = 60;
+    inputParams.epochs = 4;
     //!
     
     infoPrinter(inputParams, net);
