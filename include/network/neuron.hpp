@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <random>
+#include <cmath>
 
 
 /**
@@ -25,14 +26,9 @@ class Neuron {
 
 
         /**
-         * @brief Constructs a Neuron object with the specified input size.
-         * 
-         * This constructor initializes the neuron with a set of randomized
-         * weights and bias. The input size determines the number of weights.
-         * 
-         * @param inputSize The number of inputs to the neuron.
+         * @brief
          */
-        Neuron(int inputSize);
+        Neuron(int inputSize, int outputSize);
 
 
         /**
@@ -74,11 +70,7 @@ class Neuron {
 
 
         /**
-         * @brief Initializes the bias of the neuron randomly.
-         * 
-         * This method generates a random bias value for the neuron.
-         * 
-         * @return The initialized bias value.
+         * @brief 
          */
         double initializeBias();
 
@@ -91,7 +83,10 @@ class Neuron {
          * @param inputSize The number of weights to initialize.
          * @return A vector containing the initialized weights.
          */
-        std::vector<double> initializeWeights(int inputSize);
+        std::vector<double> standardInitializeWeights(int inputSize);
+
+
+        std::vector<double> initializeWeights(int inputSizeLayer, int outputSizeLayer);
 
 };
 

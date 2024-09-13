@@ -93,31 +93,31 @@ std::vector<double> Layer::backwardPass(std::vector<double>& error, std::vector<
 }
 
 
-void Layer::updateWeightsBiases(double learningRate, std::vector<std::vector<double>> weights, std::vector<double> biases)
+void Layer::updateWeightsBiases(double learningRate, std::vector<std::vector<double>> gradientsWeights, std::vector<double> gradientsBiases)
 {
-    // printf("Weights size: %ld, Biases size: %ld, Neurons size: %ld\n", weights.size(), biases.size(), neurons.size());
+    // printf("Weights size: %ld, Biases size: %ld, Neurons size: %ld\n", gradientsWeights.size(), gradientsBiases.size(), neurons.size());
     
-    if (weights.size() != neurons.size() || biases.size() != neurons.size())
+    if (gradientsWeights.size() != neurons.size() || gradientsBiases.size() != neurons.size())
     {
-        printf("Error: Weights vector size: %ld or Biases size: %ld does not match the number of neurons: %ld\n", weights.size(), biases.size(), neurons.size());
+        printf("Error: Weights vector size: %ld or Biases size: %ld does not match the number of neurons: %ld\n", gradientsWeights.size(), gradientsBiases.size(), neurons.size());
         return;
     }
     
     for (int i = 0; i < neurons.size(); i++)
     {
-        //printf("%d) Weights size: %ld, Neuron size: %ld\n", i+1, weights[i].size(), neurons[i].weights.size());
+        //printf("%d) Weights size: %ld, Neuron size: %ld\n", i+1, gradientsWeights[i].size(), neurons[i].weights.size());
         
-        if (weights[i].size() != neurons[i].weights.size())
+        if (gradientsWeights[i].size() != neurons[i].weights.size())
         {
-            printf("Error: Weights size: %ld does not match the number of inputs: %ld\n", weights[i].size(), neurons[i].weights.size());
+            printf("Error: Weights size: %ld does not match the number of inputs: %ld\n", gradientsWeights[i].size(), neurons[i].weights.size());
             return;
         }
 
-        neurons[i].setBias(neurons[i].bias - (learningRate * biases[i]));
+        neurons[i].setBias(neurons[i].bias - (learningRate * gradientsBiases[i]));
 
         for (int j = 0; j < neurons[i].weights.size(); j++)
         {
-            neurons[i].weights[j] -= learningRate * weights[i][j];
+            neurons[i].weights[j] -= learningRate * gradientsWeights[i][j];
         }
     }
 
@@ -131,7 +131,7 @@ std::vector<Neuron> Layer::initializeNeurons(int inputSize, int outputSize)
 
     for (int i = 0; i < outputSize; i++)
     {
-        neurons.emplace_back(inputSize);
+        neurons.emplace_back(inputSize, outputSize);
     }
 
     return neurons;

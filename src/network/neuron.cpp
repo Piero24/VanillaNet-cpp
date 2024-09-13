@@ -4,11 +4,11 @@
 std::default_random_engine Neuron::re(static_cast<unsigned long>(std::time(nullptr)));
 
 
-Neuron::Neuron(int inputSize)
+Neuron::Neuron(int inputSize, int outputSize)
 {
     this->bias = Neuron::initializeBias();
     this->inputSize = inputSize;
-    this->weights = Neuron::initializeWeights(inputSize);
+    this->weights = Neuron::initializeWeights(inputSize, outputSize);
 }
 
 
@@ -40,18 +40,33 @@ double Neuron::getOutput(std::vector<double> inputs)
 
 double Neuron::initializeBias()
 {
-    std::uniform_real_distribution<double> unif(-0.5, 0.5);
-    return unif(re);
+    return 0.0;
 }
 
 
-std::vector<double> Neuron::initializeWeights(int inputSize)
+std::vector<double> Neuron::standardInitializeWeights(int inputSize)
 {
     std::vector<double> weightsVec(inputSize);
     std::uniform_real_distribution<double> unif(-0.5, 0.5);
 
     for (int i = 0; i < inputSize; i++)
     {
+        weightsVec[i] = unif(re);
+    }
+
+    return weightsVec;
+}
+
+
+std::vector<double> Neuron::initializeWeights(int inputSizeLayer, int outputSizeLayer)
+{
+    std::vector<double> weightsVec(inputSizeLayer);
+
+    // Calculate the limit for Glorot initialization
+    double limit = std::sqrt(6.0 / (inputSizeLayer + outputSizeLayer));
+    std::uniform_real_distribution<double> unif(-limit, limit);
+
+    for (int i = 0; i < inputSizeLayer; i++) {
         weightsVec[i] = unif(re);
     }
 
