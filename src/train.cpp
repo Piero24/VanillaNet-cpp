@@ -43,14 +43,14 @@ int networkTrain(Network &net, Arguments &inputParams)
                 std::vector<double> outputOput = net.forwardPropagation(vecLabel.imagePixelVector);
 
                 // calculate loss
-                train.loss = mse_loss(vecLabel.labelVector, outputOput);
+                train.loss = squared_error_loss(vecLabel.labelVector, outputOput);
                 net.setLoss(train.loss, 0.0);
                 lossSum += train.loss;
                 totalLoss += train.loss;
                 epochSumLoss += train.loss;
 
                 // calculate error
-                std::vector<double> error = mse_loss_prime(vecLabel.labelVector, outputOput);
+                std::vector<double> error = squared_error_loss_prime(vecLabel.labelVector, outputOput);
 
                 // backward pass
                 std::vector<BiasesWeights> gradWeightsBiases = net.backwardPropagation(error);
@@ -74,7 +74,7 @@ int networkTrain(Network &net, Arguments &inputParams)
             // calculate average loss
             double averageLoss = lossSum / batch.size();
 
-            printf(">>> Epoch: %d/%d     Batch: %d/%ld     Average Loss: %.6f     Batch Accuracy: %.2f%%     Correctly Predicted: %d/%ld\n\n", i+1, inputParams.epochs, batchCount+1, batches.size(), averageLoss, 100.0 * ((double)batchCorrect / batch.size()), batchCorrect, batch.size());
+            printf(">>> Epoch: %d/%d     Batch: %d/%ld     Average Loss: %.6f     Batch Accuracy: %.2f%%     Predicted Correctly: %d/%ld\n\n", i+1, inputParams.epochs, batchCount+1, batches.size(), averageLoss, 100.0 * ((double)batchCorrect / batch.size()), batchCorrect, batch.size());
                 
             // update weights and biases
             net.updateWeightsBiases(accumulatedGrad, inputParams.learningRate);
@@ -84,7 +84,7 @@ int networkTrain(Network &net, Arguments &inputParams)
             batchCount++;
         }
 
-        printf(">> Epoch: %d/%d     Average Loss: %.6f     Accuracy: %.2f%%     Correctly Predicted: %d/%ld\n\n", i+1, inputParams.epochs, ((double)epochSumLoss / inputParams.TrainDatasetImages.size()), 100.0 * ((double)epochCorrect / inputParams.TrainDatasetImages.size()), epochCorrect, inputParams.TrainDatasetImages.size());
+        printf(">> Epoch: %d/%d     Average Loss: %.6f     Accuracy: %.2f%%     Predicted Correctly: %d/%ld\n\n", i+1, inputParams.epochs, ((double)epochSumLoss / inputParams.TrainDatasetImages.size()), 100.0 * ((double)epochCorrect / inputParams.TrainDatasetImages.size()), epochCorrect, inputParams.TrainDatasetImages.size());
     }
 
     std::string title = " TRAINING RESULTS ";

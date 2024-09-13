@@ -3,6 +3,11 @@
 
 #include <iostream>
 #include <vector>
+#include <cmath>
+#include <cassert>
+
+
+// https://mccormickml.com/2014/03/04/gradient-descent-derivation/
 
 
 /**
@@ -46,6 +51,11 @@ double mse_loss(const std::vector<double>& yTrue, const std::vector<double>& yPr
  */
 std::vector<double> mse_loss_prime(const std::vector<double>& yTrue, const std::vector<double>& yPredicted);
 
+double squared_error_loss(const std::vector<double>& yTrue, const std::vector<double>& yPredicted);
+std::vector<double> squared_error_loss_prime(const std::vector<double>& yTrue, const std::vector<double>& yPredicted);
 
+double binary_cross_entropy_loss(const std::vector<double>& yTrue, const std::vector<double>& yPredicted);
+
+std::vector<double> binary_cross_entropy_loss_prime(const std::vector<double>& yTrue, const std::vector<double>& yPredicted);
 
 #endif // LOSSFUNCTIONS_HPP
