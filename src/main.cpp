@@ -52,6 +52,8 @@ int main(int argc, char **argv)
     net.addLayer(Layer(128, 10));
     net.addLayer(ActivationLayer(ActivationType::SIGMOID));
 
+    net.addLossFunction(LossFunction::SQUARED_ERROR);
+
     //! Remove after testing
     inputParams.hasWeightsBiases = true;
     // inputParams.WeightsBiasesPath = "./Resources/output/weights/test.json";

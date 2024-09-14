@@ -80,3 +80,42 @@ std::vector<double> binary_cross_entropy_loss_prime(const std::vector<double>& y
     
     return derivative;
 }
+
+
+LossFunctionPrime select_LossFunction_prime(LossFunction lossFunction)
+{
+    switch (lossFunction)
+    {
+        case LossFunction::MEAN_SQUARED_ERROR:
+            return LossFunctionPrime::MEAN_SQUARED_ERROR_PRIME;
+
+        case LossFunction::SQUARED_ERROR:
+            return LossFunctionPrime::SQUARED_ERROR_PRIME;
+        
+        case LossFunction::CROSS_ENTROPY:
+            return LossFunctionPrime::CROSS_ENTROPY_PRIME;
+        
+        default:
+            printf("[WARNING]: Loss function not supported. Returning INVALID loss function prime.\n");
+            return LossFunctionPrime::INVALID;
+    }
+}
+
+
+std::vector<std::string> lossFunctionTypeToString(LossFunction lossFunction)
+{
+    switch (lossFunction)
+    {
+        case LossFunction::MEAN_SQUARED_ERROR:
+            return {"Mean Squared Error", "Mean Squared Error Prime"};
+        
+        case LossFunction::SQUARED_ERROR:
+            return {"Squared Error", "Squared Error Prime"};
+        
+        case LossFunction::CROSS_ENTROPY:
+            return {"Cross Entropy", "Cross Entropy Prime"};
+        
+        default:
+            return {"None", "None"};
+    }
+}

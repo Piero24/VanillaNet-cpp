@@ -21,12 +21,14 @@ class Network {
     public:
 
         std::vector<std::shared_ptr<Layer>> Layers;  ///< A vector containing the layers in the network.
-        double loss;                                 ///< The loss value for the network.
-        double lossPrime;                            ///< The derivative of the loss function.
+        double lossValue;                            ///< The loss value for the network.
+        std::vector<double> lossPrimeValue;          ///< The derivative of the loss function.
         int standardLayerCount = 0;                  ///< The number of standard layers in the network.
         int activationLayerCount = 0;                ///< The number of activation layers in the network.
         std::vector<double> inputs;                  ///< The input to the network.
         std::vector<double> output;                  ///< The output of the network.
+        LossFunction lossFunction;                   ///< The loss function used by the network.
+        LossFunctionPrime lossFunctionPrime;         ///< The derivative of the loss function used by the network.
 
 
         /**
@@ -62,6 +64,12 @@ class Network {
 
 
         /**
+         * @brief 
+         */
+        void addLossFunction(LossFunction lossFunction);
+
+
+        /**
          * @brief Imports weights and biases into the network.
          * 
          * This function populates the weights and biases of the layers in the 
@@ -86,6 +94,12 @@ class Network {
         std::vector<BiasesWeights> saveWeightsBiases();
 
 
+        double loss(const std::vector<double>& yTrue, const std::vector<double>& yPredicted);
+
+
+        std::vector<double> lossPrime(const std::vector<double>& yTrue, const std::vector<double>& yPredicted);
+
+
         /**
          * @brief Sets the loss and its derivative for the network.
          * 
@@ -95,7 +109,7 @@ class Network {
          * @param loss The current loss value.
          * @param lossPrime The derivative of the loss function.
          */
-        void setLoss(double loss, double lossPrime);
+        void setLoss(double loss, const std::vector<double>& lossPrime);
 
 
         /**

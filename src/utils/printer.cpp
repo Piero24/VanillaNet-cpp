@@ -141,7 +141,7 @@ void infoPrinter(Arguments& inputParams, Network& net)
         }
     }
     std::cout << "\n" << std::endl;
-    std::cout << "- Loss:                        Squared Error Loss" << std::endl;
+    std::cout << "- Loss:                        " << lossFunctionTypeToString(net.lossFunction)[0] << std::endl;
     
     if (inputParams.Train)
     {

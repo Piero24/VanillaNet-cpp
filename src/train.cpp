@@ -43,15 +43,11 @@ int networkTrain(Network &net, Arguments &inputParams)
                 std::vector<double> outputOput = net.forwardPropagation(vecLabel.imagePixelVector);
 
                 // calculate loss
-                train.loss = squared_error_loss(vecLabel.labelVector, outputOput);
-                net.setLoss(train.loss, 0.0);
+                train.loss = net.loss(vecLabel.labelVector, outputOput);
                 lossSum += totalLoss += epochSumLoss += train.loss;
 
-                // calculate error
-                std::vector<double> error = squared_error_loss_prime(vecLabel.labelVector, outputOput);
-
                 // backward pass
-                std::vector<BiasesWeights> gradWeightsBiases = net.backwardPropagation(error);
+                std::vector<BiasesWeights> gradWeightsBiases = net.backwardPropagation(net.lossPrimeValue);
                 accumulatedGrad.push_back(gradWeightsBiases);
 
                 auto max_element_iter = std::max_element(outputOput.begin(), outputOput.end());

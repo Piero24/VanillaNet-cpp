@@ -7,6 +7,21 @@
 #include <cassert>
 
 
+enum class LossFunction {
+    MEAN_SQUARED_ERROR,
+    SQUARED_ERROR,
+    CROSS_ENTROPY,
+    INVALID
+};
+
+
+enum class LossFunctionPrime {
+    MEAN_SQUARED_ERROR_PRIME,
+    SQUARED_ERROR_PRIME,
+    CROSS_ENTROPY_PRIME,
+    INVALID
+};
+
 // https://mccormickml.com/2014/03/04/gradient-descent-derivation/
 
 
@@ -135,6 +150,12 @@ double binary_cross_entropy_loss(const std::vector<double>& yTrue, const std::ve
  *       division by zero.
  */
 std::vector<double> binary_cross_entropy_loss_prime(const std::vector<double>& yTrue, const std::vector<double>& yPredicted);
+
+
+LossFunctionPrime select_LossFunction_prime(LossFunction lossFunction);
+
+
+std::vector<std::string> lossFunctionTypeToString(LossFunction lossFunction);
 
 
 #endif // LOSSFUNCTIONS_HPP

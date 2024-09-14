@@ -121,10 +121,7 @@ ActivationType select_dActivation(ActivationType activationFunction)
             return ActivationType::SOFTMAX;
         
         default:
-            break;
+            printf("[WARNING]: Activation function not supported - Returned the given activation function.\n");
+            return ActivationType::INVALID;
     }
-
-    printf("[WARNING]: Activation function not supported - Returned the given activation function.\n");
-    return activationFunction;
-
 }

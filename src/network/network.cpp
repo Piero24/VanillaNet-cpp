@@ -2,8 +2,8 @@
 
 
 Network::Network() {
-    this->loss = 0.0;
-    this->lossPrime = 0.0;
+    this->lossValue = 0.0;
+    this->lossPrimeValue = std::vector<double>();
     this->output = std::vector<double>();
 }
 
@@ -19,6 +19,13 @@ void Network::addLayer(const ActivationLayer& activationLayer)
 {
     Layers.push_back(std::make_shared<ActivationLayer>(activationLayer));
     activationLayerCount++;
+}
+
+
+void Network::addLossFunction(LossFunction lossFunction)
+{
+    this->lossFunction = lossFunction;
+    this->lossFunctionPrime = select_LossFunction_prime(lossFunction);
 }
 
 
@@ -72,10 +79,41 @@ std::vector<BiasesWeights> Network::saveWeightsBiases()
 }
 
 
-void Network::setLoss(double loss, double lossPrime)
+double Network::loss(const std::vector<double>& yTrue, const std::vector<double>& yPredicted)
 {
-    this->loss = loss;
-    this->lossPrime = lossPrime;
+    if (this->lossFunction == LossFunction::SQUARED_ERROR)
+        this->lossValue = squared_error_loss(yTrue, yPredicted);
+
+    else if (this->lossFunction == LossFunction::MEAN_SQUARED_ERROR)
+        this->lossValue = mse_loss(yTrue, yPredicted);
+
+    else if (this->lossFunction == LossFunction::CROSS_ENTROPY)
+        this->lossValue = binary_cross_entropy_loss(yTrue, yPredicted);
+
+    this->lossPrimeValue = lossPrime(yTrue, yPredicted);
+    return this->lossValue;
+}
+
+
+std::vector<double> Network::lossPrime(const std::vector<double>& yTrue, const std::vector<double>& yPredicted)
+{
+    if (this->lossFunctionPrime == LossFunctionPrime::SQUARED_ERROR_PRIME)
+        this->lossPrimeValue = squared_error_loss_prime(yTrue, yPredicted);
+
+    else if (this->lossFunctionPrime == LossFunctionPrime::MEAN_SQUARED_ERROR_PRIME)
+        this->lossPrimeValue = mse_loss_prime(yTrue, yPredicted);
+
+    else if (this->lossFunctionPrime == LossFunctionPrime::CROSS_ENTROPY_PRIME)
+        this->lossPrimeValue = binary_cross_entropy_loss_prime(yTrue, yPredicted);
+
+    return this->lossPrimeValue;
+}
+
+
+void Network::setLoss(double loss, const std::vector<double>& lossPrime)
+{
+    this->lossValue = loss;
+    this->lossPrimeValue = lossPrime;
 }
 
 

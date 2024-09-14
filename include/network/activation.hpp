@@ -47,6 +47,7 @@ enum class ActivationType {
     TANH,           ///< Hyperbolic tangent activation function.
     TANH_PRIME,     ///< Derivative of the tanh activation function.
     SOFTMAX,        ///< Softmax activation function for multi-class classification.
+    INVALID
 };
 
 
