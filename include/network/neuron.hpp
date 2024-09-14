@@ -26,7 +26,16 @@ class Neuron {
 
 
         /**
-         * @brief
+         * @brief Constructs a Neuron with the specified input and output sizes.
+         * 
+         * This constructor initializes the bias and weights for the neuron based on 
+         * the given input and output sizes. The bias is initialized to a default value, 
+         * while the weights are initialized using the Glorot (Xavier) initialization 
+         * method, which helps in maintaining a good variance throughout the layers during 
+         * training.
+         * 
+         * @param inputSize The number of inputs to the neuron.
+         * @param outputSize The number of outputs from the neuron.
          */
         Neuron(int inputSize, int outputSize);
 
@@ -70,7 +79,13 @@ class Neuron {
 
 
         /**
-         * @brief 
+         * @brief Initializes the bias for the neuron.
+         * 
+         * This function sets the bias to a default value. In this implementation, the 
+         * bias is initialized to 0.0. This can be modified in the future for different 
+         * initialization strategies.
+         * 
+         * @return The initialized bias value (currently 0.0).
          */
         double initializeBias();
 
@@ -86,6 +101,19 @@ class Neuron {
         std::vector<double> standardInitializeWeights(int inputSize);
 
 
+        /**
+         * @brief Initializes the weights for the neuron.
+         * 
+         * This function initializes the weights of the neuron using the Glorot (Xavier) 
+         * initialization method, which is a common practice in neural network training. 
+         * It aims to keep the scale of the gradients roughly the same in all layers, 
+         * helping to prevent the vanishing/exploding gradient problem.
+         * 
+         * @param inputSizeLayer The number of inputs to the layer that this neuron belongs to.
+         * @param outputSizeLayer The number of outputs from the layer that this neuron belongs to.
+         * 
+         * @return A vector of initialized weights for the neuron.
+         */
         std::vector<double> initializeWeights(int inputSizeLayer, int outputSizeLayer);
 
 };

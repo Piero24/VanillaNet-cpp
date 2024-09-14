@@ -45,9 +45,7 @@ int networkTrain(Network &net, Arguments &inputParams)
                 // calculate loss
                 train.loss = squared_error_loss(vecLabel.labelVector, outputOput);
                 net.setLoss(train.loss, 0.0);
-                lossSum += train.loss;
-                totalLoss += train.loss;
-                epochSumLoss += train.loss;
+                lossSum += totalLoss += epochSumLoss += train.loss;
 
                 // calculate error
                 std::vector<double> error = squared_error_loss_prime(vecLabel.labelVector, outputOput);
@@ -61,9 +59,7 @@ int networkTrain(Network &net, Arguments &inputParams)
                 if (max_element_iter != outputOput.end())
                     train.predictedValue = std::distance(outputOput.begin(), max_element_iter);
 
-                totCorrect += train.trueValue == train.predictedValue;
-                batchCorrect += train.trueValue == train.predictedValue;
-                epochCorrect += train.trueValue == train.predictedValue;
+                totCorrect += batchCorrect += epochCorrect += (train.trueValue == train.predictedValue);
 
                 // printf(">>>> Epoch: %d/%d     Batch: %d/%ld     Sample: %d/%ld     Loss: %.6f     Batch Accuracy: %.2f%%     Predicted: %d     True: %d\n\n", i+1, inputParams.epochs, batchCount+1, batches.size(), imageCount+1, batch.size(), train.loss, 100.0 * ((double)batchCorrect / batch.size()), train.predictedValue, train.trueValue);
 

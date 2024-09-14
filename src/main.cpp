@@ -53,9 +53,10 @@ int main(int argc, char **argv)
     net.addLayer(ActivationLayer(ActivationType::SIGMOID));
 
     //! Remove after testing
-    // inputParams.hasWeightsBiases = true;
+    inputParams.hasWeightsBiases = true;
     // inputParams.WeightsBiasesPath = "./Resources/output/weights/test.json";
     // inputParams.WeightsBiasesPath = "./Resources/output/weights/mnist_fc128_relu_fc10_log_softmax_weights_biases.json";
+    inputParams.WeightsBiasesPath = "./Resources/output/weights/09_13_24/fc128_ReLU_fc10_Sigmoid_09_13_24_20_31_17.json";
     inputParams.learningRate = 0.5;
     inputParams.batchSize = 60;
     inputParams.epochs = 4;

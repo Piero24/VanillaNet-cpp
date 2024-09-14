@@ -120,7 +120,6 @@ void Layer::updateWeightsBiases(double learningRate, std::vector<std::vector<dou
             neurons[i].weights[j] -= learningRate * gradientsWeights[i][j];
         }
     }
-
 }
 
 

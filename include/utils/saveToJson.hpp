@@ -6,7 +6,7 @@ class Network; // Forward declaration of Network class
 #include <nlohmann/json.hpp>
 
 #include "layer.hpp"
-#include "network.hpp" // Include the full definition of Network here
+#include "network.hpp"
 #include "toolkit.hpp"
 
 

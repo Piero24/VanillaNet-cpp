@@ -7,6 +7,7 @@
 #include "neuron.hpp"
 #include "activation.hpp"
 
+
 /**
  * @brief Enum representing the type of a layer in a neural network.
  * 
@@ -109,15 +110,22 @@ class Layer {
 
 
         /**
-         * @brief
+         * @brief Performs the backward pass for a single layer, computing the gradients for the weights, biases, 
+         *        and propagating the error back to the previous layer.
          * 
-         * @param weights
-         * @param biases
+         * @param error The error from the output layer or the next layer (depending on the position of the current layer).
+         * @param weights A reference to the weights of the current layer, which will be updated with the computed gradients.
+         * @param biases A reference to the biases of the current layer, which will be updated with the computed gradients.
+         * @return std::vector<double> The error propagated back to the previous layer.
          */
         virtual std::vector<double> backwardPass(std::vector<double>& error, std::vector<std::vector<double>>& weights, std::vector<double>& biases);
 
         /**
-         * @brief
+         * @brief Updates the weights and biases of the neurons in the layer using the calculated gradients and the learning rate.
+         * 
+         * @param learningRate The step size used for updating the weights and biases.
+         * @param gradientsWeights The gradients for the weights of each neuron in the layer.
+         * @param gradientsBiases The gradients for the biases of each neuron in the layer.
          */
         void updateWeightsBiases(double learningRate, std::vector<std::vector<double>> weights, std::vector<double> biases);
     
@@ -186,10 +194,13 @@ class ActivationLayer : public Layer {
 
 
         /**
-         * @brief
+         * @brief Performs the backward pass through the activation layer, applying the derivative of the activation function 
+         *        to the error from the next layer.
          * 
-         * @param weights
-         * @param biases
+         * @param error The error from the next layer that needs to be adjusted based on the activation function.
+         * @param weights Not used in this layer, but passed for compatibility with other layers.
+         * @param biases Not used in this layer, but passed for compatibility with other layers.
+         * @return std::vector<double> The modified error after applying the derivative of the activation function.
          */
         std::vector<double> backwardPass(std::vector<double>& error, std::vector<std::vector<double>>& weights, std::vector<double>& biases) override;
 
