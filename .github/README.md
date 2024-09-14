@@ -254,7 +254,7 @@ git clone https://github.com/Piero24/VanillaNet-cpp.git
     ```
 
 > [!NOTE] 
-> 1. During the training phase the weight and biases are sevide multiple times in the folder `Resources/output/weights/` in order to have a backup of the weights and biases at the end of each epoch.
+> 1. During the training phase, the weights and biases are saved multiple times in the folder `Resources/output/weights/` in order to have a backup of the weights and biases at the end of each epoch.
 > 2. If you are using the MNIST dataset, you have to replace the `<path_to_training_dataset>` with the path to the folder `./Resources/Dataset/mnist_train` and `<path_to_testing_dataset>` with the path to the folder `./Resources/Dataset/mnist_test`.
 
 <br/>
