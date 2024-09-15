@@ -12,21 +12,6 @@
 
 
 /**
- * @brief Holds the result of a single training sample,
- *        including the true and predicted values, loss, and metadata.
- */
-struct TrainResult
-{
-    int trueValue;           ///< The true label or value of the input sample (e.g., class label for classification).
-    int predictedValue;      ///< The predicted label or value from the network after forward propagation.
-    double loss;             ///< The calculated loss for this sample (e.g., squared error loss).
-    std::string imagePath;   ///< The file path of the input image used for this training sample.
-    int epoch;               ///< The epoch during which this sample was processed.
-    int batch;               ///< The batch within the epoch that contained this sample.
-};
-
-
-/**
  * @brief Trains the neural network using the training dataset, performing forward and backward passes, 
  *        calculating loss, and updating weights and biases.
  * 

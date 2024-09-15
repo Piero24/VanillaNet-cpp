@@ -10,6 +10,7 @@ Network::Network() {
 
 void Network::addLayer(const Layer& layer)
 {
+    Network::checkSoftmaxLastLayer();
     Layers.push_back(std::make_shared<Layer>(layer));
     standardLayerCount++;
 }
@@ -17,8 +18,27 @@ void Network::addLayer(const Layer& layer)
 
 void Network::addLayer(const ActivationLayer& activationLayer)
 {
+    Network::checkSoftmaxLastLayer();
     Layers.push_back(std::make_shared<ActivationLayer>(activationLayer));
     activationLayerCount++;
+}
+
+
+void Network::checkSoftmaxLastLayer()
+{
+    for (int i = 0; i < Layers.size(); i++)
+    {
+        if (Layers[i]->getType() == LayerType::ActivationLayer)
+        {
+            // Use dynamic_cast to access the ActivationLayer
+            ActivationLayer* activationLayer = dynamic_cast<ActivationLayer*>(Layers[i].get());
+            if (activationLayer != nullptr && activationLayer->activationFunction == ActivationType::SOFTMAX)
+            {
+                printf("[ERROR]: The softmax activation layer must be the last layer in the network.\n");
+                exit(1);
+            }
+        }
+    }
 }
 
 
@@ -133,10 +153,15 @@ std::vector<double> Network::forwardPropagation(const std::vector<double>& input
 
 std::vector<BiasesWeights> Network::backwardPropagation(const std::vector<double>& outputError)
 {
+    int skipSoftmax = 1;
     std::vector<double> error = outputError;
     std::vector<BiasesWeights> weightsBiases;
 
-    for (int i = Layers.size() - 1; i >= 0; i--)
+    ActivationLayer* activationLayer = dynamic_cast<ActivationLayer*>(Layers[Layers.size() - 1].get());
+    if (activationLayer != nullptr && activationLayer->activationFunction == ActivationType::SOFTMAX)
+        skipSoftmax = 2;
+
+    for (int i = Layers.size() - skipSoftmax; i >= 0; i--)
     {
         BiasesWeights gradients;
 

@@ -60,10 +60,14 @@ double binary_cross_entropy_loss(const std::vector<double>& yTrue, const std::ve
 {
     assert(yTrue.size() == yPredicted.size());
     double loss = 0.0;
+    const double epsilon = 1e-12; // Small value to prevent log(0)
     
     for (size_t i = 0; i < yTrue.size(); ++i)
-        // Binary cross-entropy: L = -y_true * log(y_pred) - (1 - y_true) * log(1 - y_pred)
-        loss += yTrue[i] * log(yPredicted[i]) + (1 - yTrue[i]) * log(1 - yPredicted[i]);
+    {
+        // Clamping the predictions to prevent log(0)
+        double yPred = std::min(std::max(yPredicted[i], epsilon), 1.0 - epsilon);
+        loss += yTrue[i] * log(yPred) + (1 - yTrue[i]) * log(1 - yPred);
+    }
     
     return -loss;
 }

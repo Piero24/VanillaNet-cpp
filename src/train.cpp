@@ -5,10 +5,9 @@ int networkTrain(Network &net, Arguments &inputParams)
     if (!inputParams.Train)
         return 0;
 
-    std::vector<TrainResult> trainResults;
-
     // Shuffle the training data
     auto rng = std::default_random_engine {};
+    
     int totCorrect = 0;
     double totalLoss = 0.0;
 
@@ -16,35 +15,30 @@ int networkTrain(Network &net, Arguments &inputParams)
     {
         std::shuffle(inputParams.TrainDatasetImages.begin(), inputParams.TrainDatasetImages.end(), rng);
         std::vector<std::vector<std::string>> batches = splitIntoBatches(inputParams.TrainDatasetImages, inputParams.batchSize);
-        int batchCount = 0;
-        double epochSumLoss = 0.0;
-        int epochCorrect = 0;
 
-        for(const auto& batch : batches)
+        double epochLossSum = 0.0;
+        int epochCorrectImagesCount = 0;
+
+        for(int m = 0; m < batches.size(); m++)
         {
-            double lossSum = 0.0;
-            int imageCount = 0;
-            int batchCorrect = 0;
+            double batchLossSum = 0.0;
+            int batchCorrectImagesCount = 0;
+
+            double geometricMeanLoss = 1.0;
 
             std::vector<std::vector<BiasesWeights>> accumulatedGrad;
             
-            for (const auto& imagePath : batch)
+            for (int n = 0; n < batches[m].size(); n++)
             {
-                TrainResult train;
-
                 VectorLabel vecLabel;
-                imageToVectorAndLabel(vecLabel, imagePath);
-                train.trueValue = vecLabel.label;
-                train.imagePath = imagePath;
-
-                train.epoch = i;
-                train.batch = batchCount;
+                imageToVectorAndLabel(vecLabel, batches[m][n]);
 
                 std::vector<double> outputOput = net.forwardPropagation(vecLabel.imagePixelVector);
 
                 // calculate loss
-                train.loss = net.loss(vecLabel.labelVector, outputOput);
-                lossSum += totalLoss += epochSumLoss += train.loss;
+                double lossValue = net.loss(vecLabel.labelVector, outputOput);
+                batchLossSum += lossValue;
+                geometricMeanLoss *= lossValue; // Multiply the losses
 
                 // backward pass
                 std::vector<BiasesWeights> gradWeightsBiases = net.backwardPropagation(net.lossPrimeValue);
@@ -52,31 +46,61 @@ int networkTrain(Network &net, Arguments &inputParams)
 
                 auto max_element_iter = std::max_element(outputOput.begin(), outputOput.end());
 
+                int predictedLabel = 0;
                 if (max_element_iter != outputOput.end())
-                    train.predictedValue = std::distance(outputOput.begin(), max_element_iter);
+                    predictedLabel = std::distance(outputOput.begin(), max_element_iter);
 
-                totCorrect += batchCorrect += epochCorrect += (train.trueValue == train.predictedValue);
+                batchCorrectImagesCount += (vecLabel.label == predictedLabel);
 
-                // printf(">>>> Epoch: %d/%d     Batch: %d/%ld     Sample: %d/%ld     Loss: %.6f     Batch Accuracy: %.2f%%     Predicted: %d     True: %d\n\n", i+1, inputParams.epochs, batchCount+1, batches.size(), imageCount+1, batch.size(), train.loss, 100.0 * ((double)batchCorrect / batch.size()), train.predictedValue, train.trueValue);
+                // std::ostringstream ossAcc;
+                // ossAcc << std::fixed << std::setprecision(2) << 100.0 * ((double)batchCorrectImagesCount / batches[m].size());
 
-                imageCount++;
-                trainResults.push_back(train);
+                // std::cout << ">>>> Epoch: " << i+1 << "/" << inputParams.epochs;
+                // std::cout << "     Batch: " << m+1 << "/" << batches.size();
+                // std::cout << "     Sample: " << n+1 << "/" << batches[m].size();
+                // std::cout << "     Loss: " << lossValue;
+                // std::cout << "     Batch Accuracy: " << ossAcc.str();
+                // std::cout << "%     Predicted: " << predictedLabel;
+                // std::cout << "     True: " << vecLabel.label << "\n" << std::endl;
             }
 
-            // calculate average loss
-            double averageLoss = lossSum / batch.size();
+            epochLossSum += batchLossSum;
+            epochCorrectImagesCount += batchCorrectImagesCount;
 
-            printf(">>> Epoch: %d/%d     Batch: %d/%ld     Average Loss: %.6f     Batch Accuracy: %.2f%%     Predicted Correctly: %d/%ld\n\n", i+1, inputParams.epochs, batchCount+1, batches.size(), averageLoss, 100.0 * ((double)batchCorrect / batch.size()), batchCorrect, batch.size());
-                
+            // calculate average loss
+            double averageLoss = batchLossSum / batches[m].size();
+            double batchAccuracy = 100.0 * ((double)batchCorrectImagesCount / batches[m].size());
+            geometricMeanLoss = std::pow(geometricMeanLoss, 1.0 / batches[m].size());
+
+            std::ostringstream ossAcc;
+            ossAcc << std::fixed << std::setprecision(2) << batchAccuracy;
+
+            std::cout << ">>> Epoch: " << i+1 << "/" << inputParams.epochs;
+            std::cout << "     Batch: " << m+1 << "/" << batches.size();
+            std::cout << "     Average Loss: " << geometricMeanLoss;
+            std::cout << "     Batch Accuracy: " << ossAcc.str();
+            std::cout << "%     Predicted Correctly: " << batchCorrectImagesCount << "/" << batches[m].size() << "\n" << std::endl;
+
             // update weights and biases
             net.updateWeightsBiases(accumulatedGrad, inputParams.learningRate);
 
             std::string jsonPath = WeightsBiasesToJSON(net);
             // printf(">> Weights and biases saved to: %s\n\n", jsonPath.c_str());
-            batchCount++;
         }
 
-        printf(">> Epoch: %d/%d     Average Loss: %.6f     Accuracy: %.2f%%     Predicted Correctly: %d/%ld\n\n", i+1, inputParams.epochs, ((double)epochSumLoss / inputParams.TrainDatasetImages.size()), 100.0 * ((double)epochCorrect / inputParams.TrainDatasetImages.size()), epochCorrect, inputParams.TrainDatasetImages.size());
+        totalLoss += epochLossSum;
+        totCorrect += epochCorrectImagesCount;
+
+        double averageLoss = epochLossSum / inputParams.TrainDatasetImages.size();
+        double batchAccuracy = 100.0 * ((double)epochCorrectImagesCount / inputParams.TrainDatasetImages.size());
+
+        std::ostringstream ossAcc;
+        ossAcc << std::fixed << std::setprecision(2) << batchAccuracy;
+
+        std::cout << ">> Epoch: " << i+1 << "/" << inputParams.epochs;
+        std::cout << "     Average Loss: " << averageLoss;
+        std::cout << "     Accuracy: " << ossAcc.str();
+        std::cout << "%     Predicted Correctly: " << epochCorrectImagesCount << "/" << inputParams.TrainDatasetImages.size() << "\n" << std::endl;
     }
 
     std::string title = " TRAINING RESULTS ";

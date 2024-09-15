@@ -52,5 +52,34 @@ int networkTest(Network &net, Arguments &inputParams)
     //     }
     // }
 
+    if (acc >= inputParams.bestAccuracy)
+    {
+        inputParams.bestAccuracy = acc;
+        inputParams.bestWeightsBiasesPath = inputParams.WeightsBiasesPath;
+    }
+    else removeJsonFiles({inputParams.WeightsBiasesPath});
+
     return 0;
+}
+
+
+void weightsNetworkTest(Network &net, Arguments &inputParams, std::vector<std::string> jsonFiles)
+{
+    for (int i = 0; i < jsonFiles.size(); i++)
+    {
+        inputParams.WeightsBiasesPath = jsonFiles[i];
+        infoPrinter(inputParams, net);
+
+        inputParams.hasWeightsBiases = true;
+        std::vector<BiasesWeights> importedWeightsAndBiases;
+        weightsBiasExtractor(inputParams, importedWeightsAndBiases);
+        net.importWeightsBiases(importedWeightsAndBiases);
+
+        printf(">> Testing model %d/%ld\n", i+1, jsonFiles.size());
+        printf("Prev Accuracy: %.2f%%\n", inputParams.bestAccuracy);
+
+        networkTest(net, inputParams);
+    }
+
+    std::cout << "Best accuracy: " << inputParams.bestAccuracy << "% with file: " << inputParams.bestWeightsBiasesPath << std::endl;
 }

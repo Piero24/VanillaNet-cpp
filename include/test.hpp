@@ -5,7 +5,7 @@
 #include "toolkit.hpp"
 #include "lossFunctions.hpp"
 #include "printer.hpp"
-
+#include "tester.hpp"
 
 /**
  * @brief Holds the result of a single test sample, 
@@ -29,6 +29,9 @@ struct TestResult
  * @return int Returns 0 upon successful testing completion.
  */
 int networkTest(Network &net, Arguments &inputParams);
+
+
+void weightsNetworkTest(Network &net, Arguments &inputParams, std::vector<std::string> jsonFiles);
 
 
 #endif // TEST_HPP

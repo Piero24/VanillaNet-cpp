@@ -57,6 +57,11 @@ struct VectorLabel
  * @param TestDatasetPath A string that specifies the path to the testing dataset.
  * @param TestDatasetImages A vector of strings that stores the paths to individual testing dataset images.
  * @param WeightsBiasesPath A string that specifies the path to the file containing the pre-trained weights and biases.
+ * @param learningRate A double value representing the learning rate for the model.
+ * @param batchSize An integer value representing the batch size for training the model.
+ * @param epochs An integer value representing the number of epochs for training the model.
+ * @param bestAccuracy A double value representing the best accuracy achieved during training.
+ * @param bestWeightsBiasesPath A string that specifies the path to the file containing the best weights and biases.
  */
 struct Arguments
 {
@@ -71,6 +76,8 @@ struct Arguments
     double learningRate = 0.0;
     int batchSize = 0;
     int epochs = 0;
+    double bestAccuracy = 0;
+    std::string bestWeightsBiasesPath = "";
 };
 
 

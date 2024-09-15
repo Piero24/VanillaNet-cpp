@@ -63,6 +63,9 @@ class Network {
         void addLayer(const ActivationLayer& activationLayer);
 
 
+        void checkSoftmaxLastLayer();
+
+
         /**
          * @brief 
          */
