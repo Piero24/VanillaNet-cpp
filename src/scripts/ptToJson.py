@@ -4,7 +4,7 @@ import torch
 import json
 
 # Load the PyTorch model
-pt_path = './Resources/output/weights/mnist_fc128_relu_fc10_log_softmax'
+pt_path = './Resources/output/weights/mnist_fc128_relu_fc10_softmax'
 
 # IF CUDA
 # state_dict = torch.load(pt_path + '.pt')
