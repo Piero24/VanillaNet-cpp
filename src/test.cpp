@@ -3,54 +3,38 @@
 
 int networkTest(Network &net, Arguments &inputParams)
 {
-    std::vector<TestResult> testResults;
-
     if (!inputParams.Test)
         return 0;
+    
+    int correct = 0;
+    double averageLoss = 0.0;
 
-    for (const auto& imagePath : inputParams.TestDatasetImages)
+    for (int i = 0; i < inputParams.TestDatasetImages.size(); i++)
     {
-        TestResult test;
-
         VectorLabel vecLabel;
-        imageToVectorAndLabel(vecLabel, imagePath);
-        test.trueValue = vecLabel.label;
-        test.imagePath = imagePath;
+        imageToVectorAndLabel(vecLabel, inputParams.TestDatasetImages[i]);
 
         std::vector<double> outputOput = net.forwardPropagation(vecLabel.imagePixelVector);
-        test.loss = mse_loss(vecLabel.labelVector, outputOput);
+        double lossValue = net.loss(vecLabel.labelVector, outputOput);;
+        averageLoss += lossValue;
 
         auto max_element_iter = std::max_element(outputOput.begin(), outputOput.end());
 
+        int predictedLabel = 0;
         if (max_element_iter != outputOput.end())
-            test.predictedValue = std::distance(outputOput.begin(), max_element_iter);
+            predictedLabel = std::distance(outputOput.begin(), max_element_iter);
         
-        testResults.push_back(test);
+        correct += (vecLabel.label == predictedLabel);
+        
+        printSampleTestResults(inputParams.print, i, correct, inputParams.TestDatasetImages.size(), vecLabel.label, lossValue, predictedLabel);
     }
 
-    int correct = 0;
-    double averageLoss = 0.0;
-    for (const auto& testResult : testResults)
-    {
-        correct += testResult.trueValue == testResult.predictedValue;
-        averageLoss += testResult.loss;
-    }
-    averageLoss /= testResults.size();
+    averageLoss /= inputParams.TestDatasetImages.size();
 
     std::string title = " TESTING RESULTS ";
-    double acc = 100.0 * ((double)correct / testResults.size());
+    double acc = 100.0 * ((double)correct / inputParams.TestDatasetImages.size());
     
-    finalResultPrinter(acc, averageLoss, correct, testResults.size(), title);
-
-
-    // std::cout << "\n\nWrong predictions: " << std::endl;
-    // for (const auto& testResult : testResults)
-    // {
-    //     if (testResult.trueValue != testResult.predictedValue)
-    //     {
-    //         std::cout << "True value: " << testResult.trueValue << " Predicted value: " << testResult.predictedValue << " Loss: " << testResult.loss << " Image path: " << testResult.imagePath << std::endl;
-    //     }
-    // }
+    finalResultPrinter(acc, averageLoss, correct, inputParams.TestDatasetImages.size(), title);
 
     if (acc >= inputParams.bestAccuracy)
     {
@@ -82,4 +66,18 @@ void weightsNetworkTest(Network &net, Arguments &inputParams, std::vector<std::s
     }
 
     std::cout << "Best accuracy: " << inputParams.bestAccuracy << "% with file: " << inputParams.bestWeightsBiasesPath << std::endl;
+}
+
+
+void printSampleTestResults(bool print, int n, int correctImagesCount, int dtSize, int label, double lossValue, int predictedLabel)
+{
+    if (!print || (n % 10 != 0)) return;
+    std::ostringstream ossAcc;
+    ossAcc << std::fixed << std::setprecision(2) << 100.0 * ((double)correctImagesCount / dtSize);
+
+    std::cout << "     Sample: " << n+1 << "/" << dtSize;
+    std::cout << "     Loss: " << lossValue;
+    std::cout << "     Accuracy: " << ossAcc.str();
+    std::cout << "%    Predicted: " << predictedLabel;
+    std::cout << "     True: " << label << "\n" << std::endl;
 }

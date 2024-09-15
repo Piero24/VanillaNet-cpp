@@ -62,6 +62,7 @@ struct VectorLabel
  * @param epochs An integer value representing the number of epochs for training the model.
  * @param bestAccuracy A double value representing the best accuracy achieved during training.
  * @param bestWeightsBiasesPath A string that specifies the path to the file containing the best weights and biases.
+ * @param print A boolean flag indicating whether to print additional information during training/testing.
  */
 struct Arguments
 {
@@ -78,6 +79,7 @@ struct Arguments
     int epochs = 0;
     double bestAccuracy = 0;
     std::string bestWeightsBiasesPath = "";
+    bool print = false;
 };
 
 

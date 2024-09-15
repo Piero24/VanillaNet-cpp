@@ -93,6 +93,10 @@ int parser(Arguments& inputParams, int argc, char** inputToParse)
         {
             inputParams.batchSize = std::stoi(inputToParse[i + 1]);
         }
+        else if (strcmp(inputToParse[i], "-print") == 0 || strcmp(inputToParse[i], "-p") == 0)
+        {
+            inputParams.print = true;
+        } 
         else if (strcmp(inputToParse[i], "-help") == 0 || strcmp(inputToParse[i], "-h") == 0)
         {
             // TODO

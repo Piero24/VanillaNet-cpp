@@ -57,4 +57,22 @@ int networkTest(Network &net, Arguments &inputParams);
 void weightsNetworkTest(Network &net, Arguments &inputParams, std::vector<std::string> jsonFiles);
 
 
+/**
+ * @brief Prints the results of a sample test, including accuracy, loss, and predicted vs actual labels.
+ * 
+ * This function prints the sample test results for a classification model. It displays the sample number,
+ * the loss value for the sample, the overall accuracy up to the current sample, the predicted label, and the true label.
+ * It only prints the results for every 10th sample if the `print` flag is set to true.
+ * 
+ * @param print A boolean flag that determines whether to print the results. If set to true, the function prints every 10th sample.
+ * @param n The current sample index.
+ * @param correctImagesCount The count of correctly classified images up to the current sample.
+ * @param dtSize The total number of samples in the dataset.
+ * @param label The true label of the current sample.
+ * @param lossValue The calculated loss for the current sample.
+ * @param predictedLabel The predicted label for the current sample.
+ */
+void printSampleTestResults(bool print, int n, int correctImagesCount, int dtSize, int label, double lossValue, int predictedLabel);
+
+
 #endif // TEST_HPP
