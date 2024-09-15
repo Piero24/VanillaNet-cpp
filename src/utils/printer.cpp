@@ -165,8 +165,8 @@ void finalResultPrinter(double accuracy, double loss, int corrects, int total, s
     ossLoss << std::fixed << std::setprecision(5) << loss;
 
     std::string correctClassifiedStr = "Correctly Classified: " + std::to_string(corrects) + "/" + std::to_string(total);
-    std::string accuracyStr = "Accuracy: " + ossAcc.str() + "%";
-    std::string avgLossStr = "Average loss: " + ossLoss.str();
+    std::string accuracyStr = " Accuracy: " + ossAcc.str() + "%";
+    std::string avgLossStr = " Average loss: " + ossLoss.str();
 
     // Calculate spacing
     int leftPadding = (termWidth - 45 - correctClassifiedStr.length()) / 2;
