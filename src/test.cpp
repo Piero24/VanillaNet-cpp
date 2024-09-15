@@ -16,7 +16,7 @@ int networkTest(Network &net, Arguments &inputParams)
 
         std::vector<double> outputOput = net.forwardPropagation(vecLabel.imagePixelVector);
         double lossValue = net.loss(vecLabel.labelVector, outputOput);;
-        averageLoss += lossValue;
+        averageLoss *= lossValue;
 
         auto max_element_iter = std::max_element(outputOput.begin(), outputOput.end());
 
@@ -25,9 +25,6 @@ int networkTest(Network &net, Arguments &inputParams)
             predictedLabel = std::distance(outputOput.begin(), max_element_iter);
         
         correct += (vecLabel.label == predictedLabel);
-
-        if (vecLabel.label != predictedLabel)
-            printf("File name: %s\n", inputParams.TestDatasetImages[i].c_str());
         
         printSampleTestResults(inputParams.print, i, correct, inputParams.TestDatasetImages.size(), vecLabel.label, lossValue, predictedLabel);
     }
@@ -74,13 +71,14 @@ void weightsNetworkTest(Network &net, Arguments &inputParams, std::vector<std::s
 
 void printSampleTestResults(bool print, int n, int correctImagesCount, int dtSize, int label, double lossValue, int predictedLabel)
 {
-    if (!print || (n % 10 != 0)) return;
+    if (!print || (n-1 % 10 != 0)) return;
     std::ostringstream ossAcc;
     ossAcc << std::fixed << std::setprecision(2) << 100.0 * ((double)correctImagesCount / dtSize);
 
     std::cout << "     Sample: " << n+1 << "/" << dtSize;
     std::cout << "     Loss: " << lossValue;
-    std::cout << "     Accuracy: " << ossAcc.str();
+    if (dtSize > 1)
+        std::cout << "     Current Accuracy: " << ossAcc.str();
     std::cout << "%    Predicted: " << predictedLabel;
     std::cout << "     True: " << label << "\n" << std::endl;
 }

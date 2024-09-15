@@ -44,11 +44,14 @@ https://pub.aimind.so/building-a-neural-network-from-scratch-in-python-a-step-by
     <a href="https://github.com/Piero24/VanillaNet-cpp/blob/master/LICENSE">
     <img src="https://img.shields.io/github/license/piero24/VanillaNet-cpp">
     </a>
+    <a href="https://colab.research.google.com/drive/1PKhdX0fzxX75JgCNBCbbtW9H_NRVtl_i?usp=sharing">
+    <img src="https://colab.research.google.com/assets/colab-badge.svg">
+    </a>
 </p>
 <p align="center">
     A simple FC Neural Network build from scratch in C++
     <br/>
-    <a href="#index"><strong>See the results »</strong></a>
+    <a href="https://colab.research.google.com/drive/1PKhdX0fzxX75JgCNBCbbtW9H_NRVtl_i?usp=sharing"><strong>View a Demo »</strong></a>
     <br/>
     <br/>
     <a href="https://www.kaggle.com/datasets/oddrationale/mnist-in-csv">Dataset</a>
@@ -134,6 +137,17 @@ https://pub.aimind.so/building-a-neural-network-from-scratch-in-python-a-step-by
 </p>
 
 <br/>
+<br/>
+<p align="center">
+    <a href="#top">Try a deomo on Google Colab</a>
+</p>
+<p align="center">
+    <a href="https://colab.research.google.com/drive/1PKhdX0fzxX75JgCNBCbbtW9H_NRVtl_i?usp=sharing">
+        <img src="https://colab.research.google.com/assets/colab-badge.svg">
+    </a>
+</p>
+
+<p align="right"><a href="#top">⇧</a></p>
 
 <h2 id="made-in"><br/>🛠  Built in</h2>
 <p>
