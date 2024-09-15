@@ -1,7 +1,6 @@
 #include "neuron.hpp"
 
-
-std::default_random_engine Neuron::re(static_cast<unsigned long>(std::time(nullptr)));
+std::default_random_engine Neuron::re(static_cast<unsigned long>(time(nullptr)));
 
 
 Neuron::Neuron(int inputSize, int outputSize)

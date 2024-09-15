@@ -1,5 +1,8 @@
 #include "activation.hpp"
 
+#include <cmath>
+
+
 std::vector<double> Activation(ActivationType activationFunction, std::vector<double> inputs)
 {
     double Z = 0.0;
@@ -16,7 +19,7 @@ std::vector<double> Activation(ActivationType activationFunction, std::vector<do
                 D = -*max_it;
 
             for (int j = 0; j < inputs.size(); j++)
-                Z += exp(inputs[j]+D);
+                Z += std::exp(inputs[j]+D);
             break;
         }
         
@@ -29,7 +32,7 @@ std::vector<double> Activation(ActivationType activationFunction, std::vector<do
         switch (activationFunction)
         {
             case ActivationType::SIGMOID:
-                inputs[i] = 1 / (1 + exp(-inputs[i]));
+                inputs[i] = 1 / (1 + std::exp(-inputs[i]));
                 break;
             
             case ActivationType::SIGMOID_PRIME:
@@ -46,17 +49,17 @@ std::vector<double> Activation(ActivationType activationFunction, std::vector<do
                 break;
                 
             case ActivationType::TANH:
-                inputs[i] = tanh(inputs[i]);
+                inputs[i] = std::tanh(inputs[i]);
                 break;
             
             case ActivationType::TANH_PRIME:
-                inputs[i] = 1 - pow(tanh(inputs[i]), 2);
+                inputs[i] = 1 - std::pow(std::tanh(inputs[i]), 2);
                 break;
                 
             case ActivationType::SOFTMAX:
                 // Stable version of the softmax function
                 // https://eli.thegreenplace.net/2016/the-softmax-function-and-its-derivative/
-                inputs[i] = exp(inputs[i] + D) / Z;
+                inputs[i] = std::exp(inputs[i] + D) / Z;
                 break;
             
             // case ActivationType::SOFTMAX_PRIME:
