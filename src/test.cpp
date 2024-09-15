@@ -25,6 +25,9 @@ int networkTest(Network &net, Arguments &inputParams)
             predictedLabel = std::distance(outputOput.begin(), max_element_iter);
         
         correct += (vecLabel.label == predictedLabel);
+
+        if (vecLabel.label != predictedLabel)
+            printf("File name: %s\n", inputParams.TestDatasetImages[i].c_str());
         
         printSampleTestResults(inputParams.print, i, correct, inputParams.TestDatasetImages.size(), vecLabel.label, lossValue, predictedLabel);
     }
