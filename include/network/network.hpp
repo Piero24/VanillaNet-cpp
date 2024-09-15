@@ -63,11 +63,52 @@ class Network {
         void addLayer(const ActivationLayer& activationLayer);
 
 
+        /**
+         * @brief Verifies the correct placement of the Softmax activation layer.
+         * 
+         * This function checks the sequence of layers in the neural network to ensure 
+         * that the Softmax activation function, if present, is only used in the last layer.
+         * 
+         * - The network is represented by a collection of layers (`Layers`), and this function 
+         *   iterates over each layer to find activation layers.
+         * - It dynamically casts the current layer to an `ActivationLayer` to access the 
+         *   specific activation function used in that layer.
+         * - If a Softmax activation layer is found in any position other than the last layer,
+         *   the function prints an error message and terminates the program.
+         * 
+         * The Softmax function is only valid as the final activation in the network, 
+         * particularly in classification problems. Having Softmax in an intermediate 
+         * layer can lead to incorrect model behavior or misinterpretations of network 
+         * outputs.
+         * 
+         * @note If Softmax is not in the final layer, an error message is displayed, 
+         * and the program will exit with status code 1.
+         * 
+         * @throws Terminates the program if Softmax is not the last activation layer.
+         */
         void checkSoftmaxLastLayer();
 
 
         /**
-         * @brief 
+         * @brief Sets the loss function for the network and its corresponding derivative.
+         * 
+         * This function allows you to assign a specific loss function to the neural network.
+         * In addition to setting the loss function, it also automatically selects and assigns 
+         * the derivative (gradient) of the loss function, which will be used during backpropagation 
+         * to compute gradients for weight updates.
+         * 
+         * - The loss function (`lossFunction`) is set to the one provided as an argument.
+         * - The corresponding derivative (`lossFunctionPrime`) is selected using a helper 
+         *   function `select_LossFunction_prime()`, which maps the chosen loss function 
+         *   to its gradient calculation function.
+         * 
+         * This design ensures that both the loss function and its gradient are consistently 
+         * paired, reducing the chance of errors during training.
+         * 
+         * @param lossFunction The loss function to be used by the network (e.g., MSE, CrossEntropy).
+         * 
+         * @note The `lossFunctionPrime` is essential for backpropagation, as it calculates the 
+         * gradient of the loss with respect to the output of the network.
          */
         void addLossFunction(LossFunction lossFunction);
 
@@ -97,9 +138,49 @@ class Network {
         std::vector<BiasesWeights> saveWeightsBiases();
 
 
+        /**
+         * @brief Computes the loss value based on the chosen loss function.
+         * 
+         * This function calculates the loss value for the given true labels (`yTrue`) and 
+         * predicted values (`yPredicted`) using the specified loss function. 
+         * 
+         * - The function supports multiple loss functions such as:
+         *     - **SQUARED_ERROR**: Computes the sum of squared errors.
+         *     - **MEAN_SQUARED_ERROR**: Computes the mean of squared errors.
+         *     - **CROSS_ENTROPY**: Computes the binary cross-entropy loss.
+         * 
+         * After computing the loss, it also calculates and stores the derivative of the loss 
+         * function (by calling `lossPrime`) for use during backpropagation.
+         * 
+         * @param yTrue A vector containing the true labels.
+         * @param yPredicted A vector containing the predicted output values from the network.
+         * @return The computed loss value as a double.
+         * 
+         * @note The function stores the computed loss value (`this->lossValue`) and also 
+         * prepares the loss gradient (`this->lossPrimeValue`) for use in backpropagation.
+         */
         double loss(const std::vector<double>& yTrue, const std::vector<double>& yPredicted);
 
 
+        /**
+         * @brief Computes the derivative (gradient) of the loss function for backpropagation.
+         * 
+         * This function calculates the gradient of the loss function with respect to 
+         * the predicted values (`yPredicted`), which is essential for updating the 
+         * network's weights during backpropagation.
+         * 
+         * - The function supports computing the gradient for multiple loss functions such as:
+         *     - **SQUARED_ERROR_PRIME**: Derivative of the sum of squared errors.
+         *     - **MEAN_SQUARED_ERROR_PRIME**: Derivative of the mean squared errors.
+         *     - **CROSS_ENTROPY_PRIME**: Derivative of the binary cross-entropy loss.
+         * 
+         * @param yTrue A vector containing the true labels.
+         * @param yPredicted A vector containing the predicted output values from the network.
+         * @return A vector containing the gradient of the loss function with respect to each output.
+         * 
+         * @note The computed gradient is stored in `this->lossPrimeValue`, which will be used 
+         * during backpropagation to update the weights in the network.
+         */
         std::vector<double> lossPrime(const std::vector<double>& yTrue, const std::vector<double>& yPredicted);
 
 

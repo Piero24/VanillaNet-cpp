@@ -7,22 +7,59 @@
 #include <cassert>
 
 
-enum class LossFunction {
-    MEAN_SQUARED_ERROR,
-    SQUARED_ERROR,
-    CROSS_ENTROPY,
-    INVALID
-};
-
-
-enum class LossFunctionPrime {
-    MEAN_SQUARED_ERROR_PRIME,
-    SQUARED_ERROR_PRIME,
-    CROSS_ENTROPY_PRIME,
-    INVALID
-};
-
 // https://mccormickml.com/2014/03/04/gradient-descent-derivation/
+
+
+/**
+ * @brief Enum class representing different types of loss functions used in neural networks.
+ * 
+ * This enum class defines various loss functions that can be utilized during the 
+ * training and evaluation of a neural network. Each loss function is associated 
+ * with a specific method for measuring the discrepancy between the predicted output 
+ * and the true labels.
+ * 
+ * - **MEAN_SQUARED_ERROR**: The average of the squared differences between 
+ *   predicted values and true values. Commonly used in regression tasks.
+ * 
+ * - **SQUARED_ERROR**: The sum of squared differences, which is similar to 
+ *   mean squared error but not averaged. 
+ * 
+ * - **CROSS_ENTROPY**: A measure of the difference between two probability distributions, 
+ *   commonly used in classification tasks.
+ * 
+ * - **INVALID**: Indicates an unsupported or unrecognized loss function. This can be 
+ *   used for error handling and validation.
+ */
+enum class LossFunction {
+    MEAN_SQUARED_ERROR, ///< Average squared error loss function.
+    SQUARED_ERROR,      ///< Sum of squared error loss function.
+    CROSS_ENTROPY,      ///< Cross-entropy loss function for classification.
+    INVALID             ///< Indicates an unsupported loss function.
+};
+
+
+/**
+ * @brief Enum class representing the derivatives (primes) of different loss functions.
+ * 
+ * This enum class defines the derivatives corresponding to each loss function 
+ * defined in the `LossFunction` enum. The derivatives are essential for 
+ * calculating gradients during the backpropagation phase of neural network training.
+ * 
+ * - **MEAN_SQUARED_ERROR_PRIME**: Derivative of the mean squared error loss function.
+ * 
+ * - **SQUARED_ERROR_PRIME**: Derivative of the sum of squared error loss function.
+ * 
+ * - **CROSS_ENTROPY_PRIME**: Derivative of the cross-entropy loss function.
+ * 
+ * - **INVALID**: Indicates an unsupported or unrecognized loss function derivative. 
+ *   This can be used for error handling and validation.
+ */
+enum class LossFunctionPrime {
+    MEAN_SQUARED_ERROR_PRIME,  ///< Derivative of the mean squared error loss function.
+    SQUARED_ERROR_PRIME,       ///< Derivative of the sum of squared error loss function.
+    CROSS_ENTROPY_PRIME,       ///< Derivative of the cross-entropy loss function.
+    INVALID                    ///< Indicates an unsupported loss function prime.
+};
 
 
 /**
@@ -152,9 +189,42 @@ double binary_cross_entropy_loss(const std::vector<double>& yTrue, const std::ve
 std::vector<double> binary_cross_entropy_loss_prime(const std::vector<double>& yTrue, const std::vector<double>& yPredicted);
 
 
+/**
+ * @brief Maps a loss function to its corresponding derivative (prime) function.
+ * 
+ * This function takes a specified loss function and returns the corresponding 
+ * derivative (gradient) function, which will be used during backpropagation.
+ * 
+ * - For each loss function (e.g., `MEAN_SQUARED_ERROR`, `SQUARED_ERROR`, `CROSS_ENTROPY`), 
+ *   there is an associated derivative (e.g., `MEAN_SQUARED_ERROR_PRIME`).
+ * 
+ * @param lossFunction The loss function for which the derivative is required.
+ * @return The corresponding loss function derivative (as `LossFunctionPrime`), or 
+ *         `INVALID` if the loss function is not supported.
+ * 
+ * @warning If the loss function is not recognized, a warning message is printed, 
+ * and the function returns `LossFunctionPrime::INVALID`.
+ */
 LossFunctionPrime select_LossFunction_prime(LossFunction lossFunction);
 
 
+/**
+ * @brief Converts a loss function and its derivative to human-readable string representations.
+ * 
+ * This function converts a given loss function and its corresponding derivative 
+ * (prime) function into a pair of human-readable strings. These strings can be 
+ * used for logging, debugging, or user display purposes.
+ * 
+ * - For supported loss functions (e.g., `MEAN_SQUARED_ERROR`, `SQUARED_ERROR`, 
+ *   `CROSS_ENTROPY`), it returns a vector of two strings:
+ *     - The first string represents the name of the loss function.
+ *     - The second string represents the name of the loss function's derivative (prime).
+ * 
+ * @param lossFunction The loss function for which a string representation is required.
+ * @return A vector of strings representing the loss function and its derivative.
+ * 
+ * @note If the loss function is not recognized, the function returns "None" for both the loss function and its derivative.
+ */
 std::vector<std::string> lossFunctionTypeToString(LossFunction lossFunction);
 
 

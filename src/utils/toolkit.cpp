@@ -96,7 +96,7 @@ int parser(Arguments& inputParams, int argc, char** inputToParse)
         else if (strcmp(inputToParse[i], "-help") == 0 || strcmp(inputToParse[i], "-h") == 0)
         {
             // TODO
-            std::cout << "Not complited yet." << std::endl;
+            std::cout << "Check here for the avable parameters: https://github.com/Piero24/VanillaNet-cpp/blob/main/.github/doc.md" << std::endl;
             return -1;
         } 
         // else

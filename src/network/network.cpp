@@ -1,7 +1,8 @@
 #include "network.hpp"
 
 
-Network::Network() {
+Network::Network()
+{
     this->lossValue = 0.0;
     this->lossPrimeValue = std::vector<double>();
     this->output = std::vector<double>();

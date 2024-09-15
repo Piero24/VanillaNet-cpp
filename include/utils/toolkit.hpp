@@ -160,13 +160,26 @@ std::vector<std::string> datasetImagesVector(const std::string& datasetPath);
 
 
 /**
- * @brief 
+ * @brief Parses command-line arguments and populates the inputParams structure.
  * 
- * @param inputParams 
- * @param argc 
- * @param inputToParse 
+ * This function processes the command-line arguments provided to the program and 
+ * updates the `inputParams` structure accordingly. It handles various options for 
+ * training and testing modes, dataset paths, learning parameters, and help requests.
  * 
- * @return
+ * @param inputParams Reference to an Arguments structure where parsed parameters 
+ *                    will be stored.
+ * @param argc The number of command-line arguments.
+ * @param inputToParse An array of C-style strings representing the command-line 
+ *                     arguments.
+ * @return An integer status code:
+ *         - `0` if the parsing is successful and all required parameters are set.
+ *         - `1` if the dataset extraction operation is initiated.
+ *         - `-1` if there are missing or invalid parameters.
+ * 
+ * @note If both training and testing modes are requested simultaneously, a warning 
+ *       will be displayed, and the dataset extraction will be performed.
+ *       The function will return appropriate messages for missing required parameters, 
+ *       prompting the user to provide the necessary information.
  */
 int parser(Arguments& inputParams, int argc, char** inputToParse);
 

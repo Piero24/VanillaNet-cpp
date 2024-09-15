@@ -31,6 +31,29 @@ struct TestResult
 int networkTest(Network &net, Arguments &inputParams);
 
 
+/**
+ * @brief Tests multiple sets of weights and biases on the neural network and evaluates the performance.
+ * 
+ * This function is used to load and test multiple sets of weights and biases from different JSON files on 
+ * the provided neural network (`net`). The goal is to evaluate the performance of the network using 
+ * each set of weights and biases and track the best-performing model.
+ * 
+ * Steps involved:
+ * - Iterate over the list of JSON files (`jsonFiles`), each containing a set of weights and biases.
+ * - For each file, update the `WeightsBiasesPath` in `inputParams` and print information about the network.
+ * - Set the flag `inputParams.hasWeightsBiases` to indicate that weights and biases are being imported.
+ * - Extract the weights and biases using the `weightsBiasExtractor` function and import them into the network 
+ *   using `net.importWeightsBiases()`.
+ * - Print the current model number, previous accuracy, and test the network using `networkTest()`.
+ * 
+ * After testing all the models, the function prints the best accuracy and the corresponding file that produced it.
+ * 
+ * @param net Reference to the neural network object.
+ * @param inputParams Reference to the `Arguments` structure containing input parameters and network settings.
+ * @param jsonFiles A vector of strings, each containing the path to a JSON file with weights and biases to be tested.
+ * 
+ * @note The function tracks the best accuracy (`inputParams.bestAccuracy`) and the corresponding weights and biases file (`inputParams.bestWeightsBiasesPath`) throughout the testing process.
+ */
 void weightsNetworkTest(Network &net, Arguments &inputParams, std::vector<std::string> jsonFiles);
 
 

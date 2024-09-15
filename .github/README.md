@@ -1,6 +1,3 @@
-<!--**RELEASED-DATA**-->
-<!--**NOTSPECIFIED**-->
-
 <!-- 
 https://medium.com/@thakeenathees/neural-network-from-scratch-c-e2dc8977646b
 http://www.code-spot.co.za/2009/10/08/15-steps-to-implemented-a-neural-net/
@@ -81,7 +78,7 @@ https://pub.aimind.so/building-a-neural-network-from-scratch-in-python-a-step-by
 </div>
 <br/>
 <p>
-    The neural network used for the training is a simple feedforward neural network with one hidden layer. The <strong>input layer consists of 784 neurons</strong>, corresponding to the 28x28 pixel values of the input image. The <strong>hidden layer consists of 128 neurons</strong>, and the <strong>output layer consists of 10 neurons</strong>, each representing a digit from 0 to 9. The activation function used for the hidden layer is the ReLU function, and the output layer uses the NOTSPECIFIED function.
+    The neural network used for the training is a simple feedforward neural network with one hidden layer. The <strong>input layer consists of 784 neurons</strong>, corresponding to the 28x28 pixel values of the input image. The <strong>hidden layer consists of 128 neurons</strong>, and the <strong>output layer consists of 10 neurons</strong>, each representing a digit from 0 to 9. The activation function used for the hidden layer is the ReLU function, and the output layer uses the SOFTMAX function.
 </p>
 
 > [!NOTE]
@@ -94,7 +91,7 @@ https://pub.aimind.so/building-a-neural-network-from-scratch-in-python-a-step-by
 
 <br/>  
 <p>
-    <strong>INTRO</strong>: The program take in input a dataset of images and for each image it extract the pixel values to have a vector of 748 elements (since the images are 28x28 in the MNIST dataset). This first layer is also called the input layer. From this poin the real network is created, by inizializing two extra layers, the hidden layer and the output layer. The hidden layer has 128 neurons and the output layer has 10 neurons. The hidden layer uses the ReLU activation function and the output layer uses the NOTSPECIFIED activation function. Since on the creation of the network the weights and biases are randomly initialized at this point the selected weights and biased are loaded if provided.
+    <strong>INTRO</strong>: The program take in input a dataset of images and for each image it extract the pixel values to have a vector of 748 elements (since the images are 28x28 in the MNIST dataset). This first layer is also called the input layer. From this poin the real network is created, by inizializing two extra layers, the hidden layer and the output layer. The hidden layer has 128 neurons and the output layer has 10 neurons. The hidden layer uses the ReLU activation function and the output layer uses the SOFTMAX activation function. Since on the creation of the network the weights and biases are randomly initialized at this point the selected weights and biased are loaded if provided.
 </p>
 <p>
     <strong>TRAINING</strong>: The training phase is simple as all the neural network of this type. By showing all the dataset to the network divided in batches for a certain number of epochs, the network adjust the value of the weights an biases of eache layer following these steps:
@@ -168,6 +165,9 @@ https://pub.aimind.so/building-a-neural-network-from-scratch-in-python-a-step-by
 <p>
     For a broader view it is better to refer the user to the documentation via links: <a href="https://github.com/Piero24/VanillaNet-cpp/blob/main/.github/doc.md">Documentation »</a>
 </p>
+
+> [!WARNING]  
+> The **softmax activation function** is used only in the output layer. Is not possible to use it in the hidden layers.
 
 
 <p align="right"><a href="#top">⇧</a></p>
@@ -366,4 +366,4 @@ the individual licenses are indicated in the following section.
 
 
 ---
-> *<p align="center"> Copyrright (C) by Pietrobon Andrea <br/> Released date: **RELEASED-DATA***
+> *<p align="center"> Copyrright (C) by Pietrobon Andrea <br/> Released date: 15-09-2024*
