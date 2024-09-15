@@ -71,6 +71,7 @@ void printHorizontalLine(char c)
 
 void infoPrinter(Arguments& inputParams, Network& net)
 {   
+    if (inputParams.print) return;
     clearScreen();
     printCentered("   WELCOME TO THE VANILLANET-CPP  ", '-');
     printf("\n");

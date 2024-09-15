@@ -34,7 +34,8 @@ int networkTest(Network &net, Arguments &inputParams)
     std::string title = " TESTING RESULTS ";
     double acc = 100.0 * ((double)correct / inputParams.TestDatasetImages.size());
     
-    finalResultPrinter(acc, averageLoss, correct, inputParams.TestDatasetImages.size(), title);
+    if (!inputParams.print)
+        finalResultPrinter(acc, averageLoss, correct, inputParams.TestDatasetImages.size(), title);
 
     if (acc >= inputParams.bestAccuracy)
     {
