@@ -49,7 +49,7 @@ https://pub.aimind.so/building-a-neural-network-from-scratch-in-python-a-step-by
     </a>
 </p>
 <p align="center">
-    A simple FC Neural Network build from scratch in C++
+    A simple FC Neural Network built from scratch in C++
     <br/>
     <a href="https://colab.research.google.com/drive/1PKhdX0fzxX75JgCNBCbbtW9H_NRVtl_i?usp=sharing"><strong>View a Demo »</strong></a>
     <br/>
@@ -239,7 +239,7 @@ git clone https://github.com/Piero24/VanillaNet-cpp.git
     ```sh
     make -C build
     ```
-3. [ONLY IF YOU WANT TO USE A DATASED COMPRESSED IN A CSV LIKE THE MNIST DATASET] Create a folder inside `./Resources/Dataset/csv/` and put the datasets in csv format inside it.To esxtract the images from the csv file, run the following command:
+3. [ONLY IF YOU WANT TO USE A DATASET COMPRESSED IN A CSV LIKE THE MNIST DATASET] Create a folder inside `./Resources/Dataset/csv/` and put the datasets in csv format inside it.To esxtract the images from the csv file, run the following command:
 
     ```sh
     ./VanillaNet-cpp -csv ./Resources/Dataset/csv/
