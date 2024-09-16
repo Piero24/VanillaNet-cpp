@@ -7,7 +7,7 @@ int networkTest(Network &net, Arguments &inputParams)
         return 0;
     
     int correct = 0;
-    double averageLoss = 1.0;
+    double averageLoss = 0.0;
 
     for (int i = 0; i < inputParams.TestDatasetImages.size(); i++)
     {
@@ -16,7 +16,7 @@ int networkTest(Network &net, Arguments &inputParams)
 
         std::vector<double> outputOput = net.forwardPropagation(vecLabel.imagePixelVector);
         double lossValue = net.loss(vecLabel.labelVector, outputOput);;
-        averageLoss *= lossValue;
+        averageLoss += lossValue;
 
         auto max_element_iter = std::max_element(outputOput.begin(), outputOput.end());
 
