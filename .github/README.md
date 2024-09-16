@@ -139,7 +139,7 @@ https://pub.aimind.so/building-a-neural-network-from-scratch-in-python-a-step-by
 <br/>
 <br/>
 <p align="center">
-    <a href="#top">Try a deomo on Google Colab</a>
+    <a href="#top">Try a demo on Google Colab</a>
 </p>
 <p align="center">
     <a href="https://colab.research.google.com/drive/1PKhdX0fzxX75JgCNBCbbtW9H_NRVtl_i?usp=sharing">
