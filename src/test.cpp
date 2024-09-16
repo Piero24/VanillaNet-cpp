@@ -7,7 +7,7 @@ int networkTest(Network &net, Arguments &inputParams)
         return 0;
     
     int correct = 0;
-    double averageLoss = 0.0;
+    double averageLoss = 1.0;
 
     for (int i = 0; i < inputParams.TestDatasetImages.size(); i++)
     {
