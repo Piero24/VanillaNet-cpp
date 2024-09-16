@@ -27,7 +27,7 @@ void Network::addLayer(const ActivationLayer& activationLayer)
 
 void Network::checkSoftmaxLastLayer()
 {
-    for (int i = 0; i < Layers.size(); i++)
+    for (size_t i = 0; i < Layers.size(); i++)
     {
         if (Layers[i]->getType() == LayerType::ActivationLayer)
         {
@@ -55,13 +55,13 @@ void Network::importWeightsBiases(std::vector<BiasesWeights> weightsBiases)
     int weightBiasIndex = 0;
     if (weightsBiases.size() == 0) return;
 
-    if (weightsBiases.size() != standardLayerCount)
+    if (static_cast<int>(weightsBiases.size()) != standardLayerCount)
     {
         printf("Error: Number of layers in the network does not match the number of weights and biases provided.\n");
         return;
     }
 
-    for (int i = 0; i < Layers.size(); i++)
+    for (size_t i = 0; i < Layers.size(); i++)
     {
         // Identify the type of layer using the polymorphic method getType
         if (Layers[i]->getType() == LayerType::StandardLayer)
@@ -70,7 +70,7 @@ void Network::importWeightsBiases(std::vector<BiasesWeights> weightsBiases)
             weightBiasIndex++;
         }
 
-        if (weightBiasIndex > weightsBiases.size()) break;
+        if (weightBiasIndex > static_cast<int>(weightsBiases.size())) break;
     }
 }
 
@@ -80,7 +80,7 @@ std::vector<BiasesWeights> Network::saveWeightsBiases()
     std::vector<BiasesWeights> weightsBiases;
     int idx = 1;
 
-    for (int i = 0; i < Layers.size(); i++)
+    for (size_t i = 0; i < Layers.size(); i++)
     {
         // Identify the type of layer using the polymorphic method getType
         if (Layers[i]->getType() == LayerType::StandardLayer)
@@ -207,13 +207,13 @@ void Network::updateWeightsBiases(const std::vector<std::vector<BiasesWeights>>&
     int averageIndex = 0;
     if (average.size() == 0) return;
 
-    if (average.size() != standardLayerCount)
+    if (static_cast<int>(average.size()) != standardLayerCount)
     {
         printf("Error: Number of layers in the network does not match the number of weights and biases provided.\n");
         return;
     }
 
-    for (int i = 0; i < Layers.size(); i++)
+    for (size_t i = 0; i < Layers.size(); i++)
     {
         // Identify the type of layer using the polymorphic method getType
         if (Layers[i]->getType() == LayerType::StandardLayer)
@@ -222,7 +222,7 @@ void Network::updateWeightsBiases(const std::vector<std::vector<BiasesWeights>>&
             averageIndex++;
         }
 
-        if (averageIndex > average.size()) break;
+        if (averageIndex > static_cast<int>(average.size())) break;
     }
 }
 
@@ -232,18 +232,18 @@ std::vector<BiasesWeights> Network::calculateAverageGradients(const std::vector<
     std::vector<BiasesWeights> average = accumulatedGrad[0];
     int batchSize = accumulatedGrad.size();
 
-    for (int i = 1; i < accumulatedGrad.size(); i++)
+    for (size_t i = 1; i < accumulatedGrad.size(); i++)
     {
-        for (int j = 0; j < accumulatedGrad[i].size(); j++)
+        for (size_t j = 0; j < accumulatedGrad[i].size(); j++)
         {
-            for (int k = 0; k < accumulatedGrad[i][j].biases.size(); k++)
+            for (size_t k = 0; k < accumulatedGrad[i][j].biases.size(); k++)
             {
                 average[j].biases[k] += accumulatedGrad[i][j].biases[k];
             }
 
-            for (int k = 0; k < accumulatedGrad[i][j].weights.size(); k++)
+            for (size_t k = 0; k < accumulatedGrad[i][j].weights.size(); k++)
             {
-                for (int l = 0; l < accumulatedGrad[i][j].weights[k].size(); l++)
+                for (size_t l = 0; l < accumulatedGrad[i][j].weights[k].size(); l++)
                 {
                     average[j].weights[k][l] += accumulatedGrad[i][j].weights[k][l];
                 }
@@ -251,16 +251,16 @@ std::vector<BiasesWeights> Network::calculateAverageGradients(const std::vector<
         }
     }
 
-    for (int i = 0; i < average.size(); i++)
+    for (size_t i = 0; i < average.size(); i++)
     {
-        for (int j = 0; j < average[i].biases.size(); j++)
+        for (size_t j = 0; j < average[i].biases.size(); j++)
         {
             average[i].biases[j] /= batchSize;
         }
 
-        for (int j = 0; j < average[i].weights.size(); j++)
+        for (size_t j = 0; j < average[i].weights.size(); j++)
         {
-            for (int k = 0; k < average[i].weights[j].size(); k++)
+            for (size_t k = 0; k < average[i].weights[j].size(); k++)
             {
                 average[i].weights[j][k] /= batchSize;
             }

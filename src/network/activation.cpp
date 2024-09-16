@@ -18,7 +18,7 @@ std::vector<double> Activation(ActivationType activationFunction, std::vector<do
             if (max_it != inputs.end())
                 D = -*max_it;
 
-            for (int j = 0; j < inputs.size(); j++)
+            for (size_t j = 0; j < inputs.size(); j++)
                 Z += std::exp(inputs[j]+D);
             break;
         }
@@ -27,7 +27,7 @@ std::vector<double> Activation(ActivationType activationFunction, std::vector<do
             break;
     }
 
-    for (int i = 0; i < inputs.size(); i++)
+    for (size_t i = 0; i < inputs.size(); i++)
     {
         switch (activationFunction)
         {

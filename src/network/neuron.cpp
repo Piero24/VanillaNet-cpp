@@ -28,7 +28,7 @@ double Neuron::getOutput(std::vector<double> inputs)
 {
     double result = 0.0;
 
-    for (int i = 0; i < inputs.size(); i++)
+    for (size_t i = 0; i < inputs.size(); i++)
     {
         result += inputs[i] * weights[i];
     }

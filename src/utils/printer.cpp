@@ -123,7 +123,7 @@ void infoPrinter(Arguments& inputParams, Network& net)
     std::cout << "- Type of layers:";
 
     int j = 1;
-    for (int i = 0; i < net.Layers.size(); i++)
+    for (size_t i = 0; i < net.Layers.size(); i++)
     {
         // Identify the type of layer using the polymorphic method getType
         if (net.Layers[i]->getType() == LayerType::StandardLayer)

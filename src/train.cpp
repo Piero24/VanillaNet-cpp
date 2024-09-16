@@ -19,7 +19,7 @@ int networkTrain(Network &net, Arguments &inputParams)
         double epochLossSum = 0.0;
         int epochCorrectImagesCount = 0;
 
-        for(int m = 0; m < batches.size(); m++)
+        for(size_t m = 0; m < batches.size(); m++)
         {
             double batchLossSum = 0.0;
             int batchCorrectImagesCount = 0;
@@ -28,7 +28,7 @@ int networkTrain(Network &net, Arguments &inputParams)
 
             std::vector<std::vector<BiasesWeights>> accumulatedGrad;
             
-            for (int n = 0; n < batches[m].size(); n++)
+            for (size_t n = 0; n < batches[m].size(); n++)
             {
                 VectorLabel vecLabel;
                 imageToVectorAndLabel(vecLabel, batches[m][n]);
@@ -68,7 +68,7 @@ int networkTrain(Network &net, Arguments &inputParams)
             epochCorrectImagesCount += batchCorrectImagesCount;
 
             // calculate average loss
-            double averageLoss = batchLossSum / batches[m].size();
+            // double averageLoss = batchLossSum / batches[m].size();
             double batchAccuracy = 100.0 * ((double)batchCorrectImagesCount / batches[m].size());
             geometricMeanLoss = std::pow(geometricMeanLoss, 1.0 / batches[m].size());
 

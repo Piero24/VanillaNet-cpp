@@ -128,6 +128,12 @@ class Layer {
          * @param gradientsBiases The gradients for the biases of each neuron in the layer.
          */
         void updateWeightsBiases(double learningRate, std::vector<std::vector<double>> weights, std::vector<double> biases);
+
+
+        /**
+         * @brief Destructor for the Layer class.
+         */
+        virtual ~Layer() { }
     
 
     private:
@@ -203,6 +209,11 @@ class ActivationLayer : public Layer {
          * @return std::vector<double> The modified error after applying the derivative of the activation function.
          */
         std::vector<double> backwardPass(std::vector<double>& error, std::vector<std::vector<double>>& weights, std::vector<double>& biases) override;
+
+        /**
+         * @brief Destructor for the ActivationLayer class.
+         */
+        virtual ~ActivationLayer() { }
 
 };
 

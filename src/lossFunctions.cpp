@@ -6,7 +6,7 @@ double mse_loss(const std::vector<double>& yTrue, const std::vector<double>& yPr
     assert(yTrue.size() == yPredicted.size());
     double totalSum = 0.0;
 
-    for (int i = 0; i < yTrue.size(); i++)
+    for (size_t i = 0; i < yTrue.size(); i++)
         totalSum += pow(yTrue[i] - yPredicted[i], 2);
 
     return totalSum / yTrue.size();

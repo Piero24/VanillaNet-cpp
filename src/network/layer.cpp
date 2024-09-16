@@ -25,7 +25,7 @@ void Layer::importWeightsBiases(std::vector<std::vector<double>> weights, std::v
         return;
     }
     
-    for (int i = 0; i < neurons.size(); i++)
+    for (size_t i = 0; i < neurons.size(); i++)
     {
         //printf("%d) Weights size: %ld, Neuron size: %ld\n", i+1, weights[i].size(), neurons[i].weights.size());
         
@@ -44,7 +44,7 @@ void Layer::importWeightsBiases(std::vector<std::vector<double>> weights, std::v
 
 void Layer::saveWeightsBiases(std::vector<std::vector<double>>& weights, std::vector<double>& biases)
 {
-    for (int i = 0; i < neurons.size(); i++)
+    for (size_t i = 0; i < neurons.size(); i++)
     {
         weights.push_back(neurons[i].weights);
         biases.push_back(neurons[i].bias);
@@ -59,7 +59,7 @@ std::vector<double> Layer::forwardPass(std::vector<double> inputs)
     std::vector<double> outputs;
     outputs.reserve(neurons.size());
 
-    for (int i = 0; i < neurons.size(); i++)
+    for (size_t i = 0; i < neurons.size(); i++)
     {
         outputs.push_back(neurons[i].getOutput(inputs));
     }
@@ -73,10 +73,10 @@ std::vector<double> Layer::backwardPass(std::vector<double>& error, std::vector<
 {
     std::vector<double> input_error(inputs.size(), 0.0);
 
-    for (int i = 0; i < neurons.size(); i++)
+    for (size_t i = 0; i < neurons.size(); i++)
     {
         std::vector<double> weights_error;
-        for (int j = 0; j < neurons[i].weights.size(); j++)
+        for (size_t j = 0; j < neurons[i].weights.size(); j++)
         {
             // Gradient with respect to weight j of neuron i
             double weight_grad = this->inputs[j] * error[i];
@@ -103,7 +103,7 @@ void Layer::updateWeightsBiases(double learningRate, std::vector<std::vector<dou
         return;
     }
     
-    for (int i = 0; i < neurons.size(); i++)
+    for (size_t i = 0; i < neurons.size(); i++)
     {
         //printf("%d) Weights size: %ld, Neuron size: %ld\n", i+1, gradientsWeights[i].size(), neurons[i].weights.size());
         
@@ -115,7 +115,7 @@ void Layer::updateWeightsBiases(double learningRate, std::vector<std::vector<dou
 
         neurons[i].setBias(neurons[i].bias - (learningRate * gradientsBiases[i]));
 
-        for (int j = 0; j < neurons[i].weights.size(); j++)
+        for (size_t j = 0; j < neurons[i].weights.size(); j++)
         {
             neurons[i].weights[j] -= learningRate * gradientsWeights[i][j];
         }
@@ -153,10 +153,14 @@ std::vector<double> ActivationLayer::forwardPass(std::vector<double> inputs)
 
 std::vector<double> ActivationLayer::backwardPass(std::vector<double>& error, std::vector<std::vector<double>>& weights, std::vector<double>& biases)
 {
+    // Marking the unused parameters to avoid compiler warnings
+    (void)weights;
+    (void)biases;
+    
     ActivationType sel_dAct = select_dActivation(this->activationFunction);
     std::vector<double> dInput = Activation(sel_dAct, this->outputs);
 
-    for (int i = 0; i < error.size(); i++)
+    for (size_t i = 0; i < error.size(); i++)
         error[i] *= dInput[i];
 
     return error;

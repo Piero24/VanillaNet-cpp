@@ -9,14 +9,14 @@ int networkTest(Network &net, Arguments &inputParams)
     int correct = 0;
     double averageLoss = 0.0;
 
-    for (int i = 0; i < inputParams.TestDatasetImages.size(); i++)
+    for (size_t i = 0; i < inputParams.TestDatasetImages.size(); i++)
     {
         VectorLabel vecLabel;
         imageToVectorAndLabel(vecLabel, inputParams.TestDatasetImages[i]);
 
         std::vector<double> outputOput = net.forwardPropagation(vecLabel.imagePixelVector);
         double lossValue = net.loss(vecLabel.labelVector, outputOput);;
-        averageLoss += lossValue;
+        averageLoss *= lossValue;
 
         auto max_element_iter = std::max_element(outputOput.begin(), outputOput.end());
 
@@ -29,7 +29,8 @@ int networkTest(Network &net, Arguments &inputParams)
         printSampleTestResults(inputParams.print, i, correct, inputParams.TestDatasetImages.size(), vecLabel.label, lossValue, predictedLabel);
     }
 
-    averageLoss /= inputParams.TestDatasetImages.size();
+    //averageLoss /= inputParams.TestDatasetImages.size();
+    averageLoss = std::pow(averageLoss, 1.0 / inputParams.TestDatasetImages.size());
 
     std::string title = " TESTING RESULTS ";
     double acc = 100.0 * ((double)correct / inputParams.TestDatasetImages.size());
@@ -50,7 +51,7 @@ int networkTest(Network &net, Arguments &inputParams)
 
 void weightsNetworkTest(Network &net, Arguments &inputParams, std::vector<std::string> jsonFiles)
 {
-    for (int i = 0; i < jsonFiles.size(); i++)
+    for (size_t i = 0; i < jsonFiles.size(); i++)
     {
         inputParams.WeightsBiasesPath = jsonFiles[i];
         infoPrinter(inputParams, net);
@@ -60,7 +61,7 @@ void weightsNetworkTest(Network &net, Arguments &inputParams, std::vector<std::s
         weightsBiasExtractor(inputParams, importedWeightsAndBiases);
         net.importWeightsBiases(importedWeightsAndBiases);
 
-        printf(">> Testing model %d/%ld\n", i+1, jsonFiles.size());
+        printf(">> Testing model %zu/%ld\n", i+1, jsonFiles.size());
         printf("Prev Accuracy: %.2f%%\n", inputParams.bestAccuracy);
 
         networkTest(net, inputParams);

@@ -18,7 +18,7 @@ std::string WeightsBiasesToJSON(Network& net)
 
     std::string fileName;
 
-    for (int i = 0; i < net.Layers.size(); i++)
+    for (size_t i = 0; i < net.Layers.size(); i++)
     {
         // Identify the type of layer using the polymorphic method getType
         if (net.Layers[i]->getType() == LayerType::StandardLayer)
