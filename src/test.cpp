@@ -16,7 +16,7 @@ int networkTest(Network &net, Arguments &inputParams)
 
         std::vector<double> outputOput = net.forwardPropagation(vecLabel.imagePixelVector);
         double lossValue = net.loss(vecLabel.labelVector, outputOput);;
-        averageLoss *= lossValue;
+        averageLoss += lossValue;
 
         auto max_element_iter = std::max_element(outputOput.begin(), outputOput.end());
 
@@ -29,8 +29,8 @@ int networkTest(Network &net, Arguments &inputParams)
         printSampleTestResults(inputParams.print, i, correct, inputParams.TestDatasetImages.size(), vecLabel.label, lossValue, predictedLabel);
     }
 
-    //averageLoss /= inputParams.TestDatasetImages.size();
-    averageLoss = std::pow(averageLoss, 1.0 / inputParams.TestDatasetImages.size());
+    averageLoss /= inputParams.TestDatasetImages.size();
+    //averageLoss = std::pow(averageLoss, 1.0 / inputParams.TestDatasetImages.size());
 
     std::string title = " TESTING RESULTS ";
     double acc = 100.0 * ((double)correct / inputParams.TestDatasetImages.size());
@@ -79,7 +79,7 @@ void printSampleTestResults(bool print, int n, int correctImagesCount, int dtSiz
 
     std::cout << ">>> Sample: " << n << "/" << dtSize;
     std::cout << "     Loss: " << lossValue;
-    if (dtSize > 1) std::cout << "     Current Accuracy: " << ossAcc.str();
-    std::cout << "%    Predicted: " << predictedLabel;
+    if (dtSize > 1) std::cout << "     Current Accuracy: " << ossAcc.str() << "%";
+    std::cout << "    Predicted: " << predictedLabel;
     std::cout << "     True: " << label << "\n" << std::endl;
 }
