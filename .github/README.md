@@ -66,7 +66,7 @@ https://pub.aimind.so/building-a-neural-network-from-scratch-in-python-a-step-by
 
 
 <br/><br/>
-<h2 id="itroduction">📔  Itroduction</h2>
+<h2 id="introduction">📔  Introduction</h2>
 <p>
     This project is a straightforward implementation of a fully connected neural network in C++. It <strong>doesn’t rely on external machine learning libraries—only</strong> the standard C++ libraries are used, with two exceptions: OpenCV for extracting pixel values from images and nlohmann/json for saving weights and biases in a JSON file.
 </p>
